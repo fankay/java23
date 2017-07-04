@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.mapper.UserMapper">
+	<!-- namespace属性值推荐写成类似完全限定名的形式 -->
+
+	<!-- 
+		根据Id查询User对象
+		id: 类似方法名
+		parameterType : 参数类型（可选）
+		resultType : 返回值类型(可选) 
+	-->
+	<select id="findById" parameterType="int" resultType="User">
+		select * from t_user where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="User">
+		select * from t_user
+	</select>
+	
+	<insert id="save" parameterType="User">
+		insert into t_user(user_name,password,address) values(#{userName},#{password},#{address})
+	</insert>
+	
+	<update id="update" parameterType="User">
+		update t_user set user_name=#{userName},password=#{password},address=#{address} where id = #{id}
+	</update>
+	
+	<delete id="delById" parameterType="int">
+		delete from t_user where id = #{id}
+	</delete>
+	
+	
+</mapper>
