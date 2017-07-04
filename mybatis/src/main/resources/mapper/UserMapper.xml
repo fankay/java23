@@ -19,6 +19,52 @@
 		select * from t_user
 	</select>
 	
+	<!-- ONGL 进行映射 -->
+	<select id="findAllLoadDept" resultType="User">
+		SELECT
+			t_user.id,
+			user_name,
+			address,
+			PASSWORD,
+			dept_id,
+			t_dept.id AS `dept.id`,
+			t_dept.dept_name AS `dept.deptName`
+		FROM
+			t_user,
+			t_dept
+		WHERE
+			t_user.dept_id = t_dept.id
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- <select id="findAllLoadDept" resultMap="userMap">
+		select t_user.id,user_name,address,password,dept_id,dept_name from t_user,t_dept
+		where t_user.dept_id = t_dept.id
+	</select> -->
+	
+	<!-- 自定义结果集映射：告诉MyBaits如何将列和类的属性进行对应 -->
+	<!-- <resultMap type="User" id="userMap">
+		<id column="id" property="id"/>
+		<result column="user_name" property="userName"/>
+		<result column="address" property="address"/>
+		<result column="password" property="password"/>
+		<result column="dept_id" property="deptId"/>
+		<association property="dept" javaType="Dept">
+			<id column="dept_id" property="id"/>
+			<result column="dept_name" property="deptName"/>
+		</association>
+	</resultMap> -->
+	
+	
+	
 	<insert id="save" parameterType="User">
 		insert into t_user(user_name,password,address) values(#{userName},#{password},#{address})
 	</insert>

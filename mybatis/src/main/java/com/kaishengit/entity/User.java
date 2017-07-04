@@ -6,6 +6,9 @@ public class User {
 	private String userName;
 	private String address;
 	private String password;
+	private Integer deptId;
+	private Dept dept;
+	
 	
 	public Integer getId() {
 		return id;
@@ -30,6 +33,19 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Integer getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+	public Dept getDept() {
+		return dept;
+	}
+	public void setDept(Dept dept) {
+		this.dept = dept;
 	}
 	@Override
 	public String toString() {

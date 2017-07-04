@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.mapper.DeptMapper">
+	
+	<select id="findByIdLoadUser" parameterType="int" resultMap="deptMap">
+		SELECT
+			t_dept.id,
+			dept_name,
+			t_user.id AS userid,
+			user_name,
+			address,
+			`password`,
+			dept_id
+		FROM
+			t_dept
+		LEFT JOIN t_user ON t_dept.id = t_user.dept_id
+		WHERE
+			t_dept.id = #{id}
+	</select>
+	
+	<resultMap type="Dept" id="deptMap">
+		<id column="id" property="id"/>
+		<result column="dept_name" property="deptName"/>
+		<collection property="userList" ofType="User">
+			<id column="userid" property="id"/>
+			<result column="user_name" property="userName"/>
+			<result column="address" property="address"/>
+			<result column="password" property="password"/>
+			<result column="dept_id" property="deptId"/>
+		</collection>
+	</resultMap>
+
+</mapper>

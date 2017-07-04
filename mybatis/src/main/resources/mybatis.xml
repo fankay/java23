@@ -12,6 +12,7 @@
 	<!-- 注册别名 -->
 	<typeAliases>
 		<typeAlias type="com.kaishengit.entity.User" alias="User"/>
+		<typeAlias type="com.kaishengit.entity.Dept" alias="Dept"/>
 	</typeAliases>
 
 	<environments default="dev">
@@ -31,6 +32,7 @@
 	<!-- 加载Mapper配置文件 -->
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml"/>
+		<mapper resource="mapper/DeptMapper.xml"/>
 	</mappers>
 	
 </configuration>

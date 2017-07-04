@@ -11,4 +11,7 @@ public interface UserMapper {
 	void save(User user);
 	void update(User user);
 	void delById(Integer id);
+	
+	List<User> findAllLoadDept();
+	
 }
