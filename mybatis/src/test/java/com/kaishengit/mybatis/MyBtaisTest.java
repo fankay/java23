@@ -8,10 +8,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.kaishengit.entity.User;
+import com.kaishengit.util.MyBatisUtil;
 
 public class MyBtaisTest {
+	
+	private Logger logger = LoggerFactory.getLogger(MyBtaisTest.class);
 	
 	@Test
 	public void first() throws Exception {
@@ -40,19 +45,12 @@ public class MyBtaisTest {
 	@Test
 	public void findAll() throws Exception {
 		
-		//1. 加载配置文件
-		Reader reader = Resources.getResourceAsReader("mybatis.xml");
-		//2. 创建SqlSessionFactory
-		SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
-		SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(reader);
-		//3. 创建SqlSession
-		SqlSession sqlSession = sqlSessionFactory.openSession();
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
 		//4. 操作数据库
 		
 		List<User> userList = sqlSession.selectList("com.kaishengit.mapper.UserMapper.findAll");
 		for(User user : userList) {
-			System.out.println(user.getUserName());
-			System.out.println(user.getAddress());
+			logger.debug("{} -> {} -> {}",user.getId(),user.getUserName(),user.getAddress());
 		}
 		
 		
