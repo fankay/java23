@@ -4,24 +4,26 @@
 	<groupId>com.kaishengit</groupId>
 	<artifactId>mybaits</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<!-- 常量配置 -->
 	<properties>
 		<junit-version>4.12</junit-version>
 		<mybatis-verion>3.4.4</mybatis-verion>
 		<mysql-version>5.1.40</mysql-version>
 		<slf4j-version>1.7.25</slf4j-version>
+		<commons-lang3-version>3.6</commons-lang3-version>
+		<pageHelper-version>5.0.0</pageHelper-version>
 	</properties>
 
 	<!-- jar依赖 -->
 	<dependencies>
 		<!-- junit -->
 		<dependency>
-		    <groupId>junit</groupId>
-		    <artifactId>junit</artifactId>
-		    <version>${junit-version}</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
 		</dependency>
-		
+
 		<!-- MyBatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -30,23 +32,55 @@
 		</dependency>
 		<!-- MySQL -->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>${mysql-version}</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-version}</version>
 		</dependency>
 		<!-- 日志依赖 -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>${slf4j-version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>${slf4j-version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-version}</version>
 		</dependency>
-		
-		
+		<!-- commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3-version}</version>
+		</dependency>
+
+		<!-- pageHelper -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>${pageHelper-version}</version>
+		</dependency>
+
 	</dependencies>
+
+
+	<build>
+		<!-- 插件的配置 -->
+		<plugins>
+			<!-- MBG插件 -->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.5</version>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+
+
+
+
 
 </project>

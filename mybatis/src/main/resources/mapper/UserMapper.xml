@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kaishengit.mapper.UserMapper">
 
-	<cache/>
+	<!-- <cache/> -->
 	<!-- <cache readOnly="true" size="2048" flushInterval="60" eviction="FIFO"/> -->
 
 	<!-- namespace属性值推荐写成类似完全限定名的形式 -->
@@ -19,7 +19,7 @@
 		parameterType : 参数类型（可选）
 		resultType : 返回值类型(可选) 
 	-->
-	<select id="findById" parameterType="int" resultType="User" useCache="false">
+	<!-- <select id="findById" parameterType="int" resultType="User" useCache="false">
 		select 
 		<include refid="allColumns"/>
 		 from t_user where id = #{id}
@@ -36,7 +36,7 @@
 	<select id="findByMapParam" parameterType="map" resultType="User">
 		select <include refid="allColumns"/> from t_user where user_name = #{name} and password = #{pwd}
 	</select>
-	
+	 -->
 	
 	<select id="searchByNameAndAddress" parameterType="map" resultType="User">
 		select 
@@ -101,9 +101,9 @@
 	
 	
 	
-	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" flushCache="false">
+	<!-- <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" flushCache="false">
 		insert into t_user(user_name,password,address) values(#{userName},#{password},#{address})
-	</insert>
+	</insert> -->
 	
 	<insert id="batchSave" parameterType="list">
 		insert into t_user(user_name,password,address,dept_id) values
@@ -112,13 +112,13 @@
 		</foreach>
 	</insert>
 	
-	<update id="update" parameterType="User">
+	<!-- <update id="update" parameterType="User">
 		update t_user set user_name=#{userName},password=#{password},address=#{address} where id = #{id}
-	</update>
+	</update> -->
 	
-	<delete id="delById" parameterType="int">
+	<!-- <delete id="delById" parameterType="int">
 		delete from t_user where id = #{id}
-	</delete>
+	</delete> -->
 	
 	<delete id="delByIds" parameterType="list">
 		delete from t_user where id in 

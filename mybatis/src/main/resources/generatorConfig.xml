@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+ <generatorConfiguration>
+ 
+ 	<!-- 配置生成规则 -->
+ 	
+ 	<!-- 如何连接数据库 -->
+ 	<!-- 1. 指定jar -->
+ 	<classPathEntry location="D:/jar/mysql-connector-java-5.1.41.jar"/>
+ 	
+ 	
+ 	<!-- 
+ 		MyBatis3Simple : 仅生成简单的CRUD语句
+ 		MyBatis3 ： 生成带条件(Example类)的CRUD语句
+ 	 -->
+ 	<context id="MBGConfig" targetRuntime="MyBatis3">
+ 	
+ 		<!-- 注释的配置 -->
+ 		<commentGenerator>
+ 			<!-- 不生成注释 -->
+ 			<property name="suppressAllComments" value="true"/>
+ 			<!-- 不生成日期 -->
+ 			<property name="suppressDate" value="true"/>
+ 		</commentGenerator>
+ 	
+ 		<!-- 连接数据库的信息 -->
+ 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+ 						connectionURL="jdbc:mysql:///mydb" 
+ 						userId="root" 
+ 						password="rootroot"/>
+ 		
+ 		<!-- 实体类的生成 -->
+ 		<javaModelGenerator targetPackage="com.kaishengit.entity" targetProject="src/main/java"/>
+ 		
+ 		<!-- Mapper XML文件的生成 -->
+ 		<sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"></sqlMapGenerator>
+ 		
+ 		<!-- Mapper接口的生成 -->
+ 		<javaClientGenerator targetPackage="com.kaishengit.mapper" type="XMLMAPPER" targetProject="src/main/java"/>
+ 		
+ 		
+ 		<table tableName="movie"></table>
+ 		
+ 	</context>
+ 
+ </generatorConfiguration>
