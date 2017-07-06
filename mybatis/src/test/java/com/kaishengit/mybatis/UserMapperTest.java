@@ -5,7 +5,11 @@ import com.kaishengit.entity.User;
 import com.kaishengit.mapper.UserMapper;
 import com.kaishengit.util.MyBatisUtil;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
@@ -55,12 +59,13 @@ public class UserMapperTest {
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		
 		User user = new User();
-		user.setAddress("伦敦");
+		user.setAddress("纽约");
 		user.setPassword("777888");
-		user.setUserName("James");
+		user.setUserName("Rose");
 		
 		userMapper.save(user);
 		
+		System.out.println("ID:" + user.getId());
 		
 		sqlSession.commit();
 		sqlSession.close();
@@ -81,7 +86,93 @@ public class UserMapperTest {
 	}
 	
 	
+	@Test
+	public void findUserNameAndPassword() {
+		User user = userMapper.findByUserNameAndPassword("Tom", "123123");
+		System.out.println(user.getId());
+	}
 	
+	
+	@Test
+	public void findByMapParam() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "Tom");
+		map.put("pwd", "123123");
+		
+		User user = userMapper.findByMapParam(map);
+		System.out.println(user.getId());
+	}
+	
+	@Test
+	public void searchByNameAndAddress() {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "Tom");
+		//map.put("address", "美国");
+		
+		List<User> userList = userMapper.searchByNameAndAddress(map);
+		
+		for (User user : userList) {
+			System.out.println(user.getId());
+		}
+		
+	}
+	
+	@Test
+	public void delByIds() {
+		List<Integer> idList = Arrays.asList(12,13);
+		
+		userMapper.delByIds(idList);
+		
+		sqlSession.commit();
+	}
+	
+	
+	@Test
+	public void batchSave() {
+		
+		List<User> userList = Arrays.asList(new User("Jack","美国","111111",1),
+				new User("海森堡","德国","111111",1),
+				new User("李四","中国","111111",1));
+		
+		userMapper.batchSave(userList);
+		
+		sqlSession.commit();
+		
+	}
+	
+	
+	@Test
+	public void firstLevelCache() {
+		
+		User user = userMapper.findById(1);
+		User user2 = userMapper.findById(1);
+		
+		System.out.println(user2.getUserName());
+		
+	}
+	
+	@Test
+	public void secLevelCache() {
+		SqlSession session1 = MyBatisUtil.getSqlSession();
+		UserMapper userMapper1 = session1.getMapper(UserMapper.class);
+		
+		User user1 = userMapper1.findById(1);
+		
+		System.out.println(user1.getUserName());
+		session1.close();
+		
+		System.out.println("-----------------------------");
+		
+		SqlSession session2 = MyBatisUtil.getSqlSession();
+		UserMapper userMapper2 = session2.getMapper(UserMapper.class);
+		
+		User user2 = userMapper2.findById(1);
+		
+		System.out.println(user2.getUserName());
+		session2.close();
+		
+	}
 	
 	
 	

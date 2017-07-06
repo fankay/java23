@@ -1,7 +1,10 @@
 package com.kaishengit.entity;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String userName;
 	private String address;
@@ -10,6 +13,14 @@ public class User {
 	private Dept dept;
 	
 	
+	public User(){}
+	
+	public User(String userName, String address, String password, Integer deptId) {
+		this.userName = userName;
+		this.address = address;
+		this.password = password;
+		this.deptId = deptId;
+	}
 	public Integer getId() {
 		return id;
 	}

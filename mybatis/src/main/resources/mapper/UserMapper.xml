@@ -3,7 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kaishengit.mapper.UserMapper">
+
+	<cache/>
+	<!-- <cache readOnly="true" size="2048" flushInterval="60" eviction="FIFO"/> -->
+
 	<!-- namespace属性值推荐写成类似完全限定名的形式 -->
+
+	<sql id="allColumns">
+		id,user_name,password,address,dept_id
+	</sql>
 
 	<!-- 
 		根据Id查询User对象
@@ -11,13 +19,41 @@
 		parameterType : 参数类型（可选）
 		resultType : 返回值类型(可选) 
 	-->
-	<select id="findById" parameterType="int" resultType="User">
-		select * from t_user where id = #{id}
+	<select id="findById" parameterType="int" resultType="User" useCache="false">
+		select 
+		<include refid="allColumns"/>
+		 from t_user where id = #{id}
 	</select>
 	
 	<select id="findAll" resultType="User">
-		select * from t_user
+		select <include refid="allColumns"/> from t_user
 	</select>
+	
+	<select id="findByUserNameAndPassword" resultType="User">
+		select <include refid="allColumns"/> from t_user where user_name = #{arg0} and password = #{arg1}
+	</select>
+	
+	<select id="findByMapParam" parameterType="map" resultType="User">
+		select <include refid="allColumns"/> from t_user where user_name = #{name} and password = #{pwd}
+	</select>
+	
+	
+	<select id="searchByNameAndAddress" parameterType="map" resultType="User">
+		select 
+			<include refid="allColumns"/>
+		from
+			t_user
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="name != null and name != ''">
+				user_name = #{name}  
+			</if>
+			<if test="address != null and address != ''">
+				and address = #{address}
+			</if>
+		</trim>
+	</select>
+	
+	
 	
 	<!-- ONGL 进行映射 -->
 	<select id="findAllLoadDept" resultType="User">
@@ -65,8 +101,15 @@
 	
 	
 	
-	<insert id="save" parameterType="User">
+	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" flushCache="false">
 		insert into t_user(user_name,password,address) values(#{userName},#{password},#{address})
+	</insert>
+	
+	<insert id="batchSave" parameterType="list">
+		insert into t_user(user_name,password,address,dept_id) values
+		<foreach collection="list" item="user" separator=",">
+			(#{user.userName},#{user.password},#{user.address},#{user.deptId})
+		</foreach>
 	</insert>
 	
 	<update id="update" parameterType="User">
@@ -75,6 +118,14 @@
 	
 	<delete id="delById" parameterType="int">
 		delete from t_user where id = #{id}
+	</delete>
+	
+	<delete id="delByIds" parameterType="list">
+		delete from t_user where id in 
+		<foreach collection="list" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>
+		
 	</delete>
 	
 	
