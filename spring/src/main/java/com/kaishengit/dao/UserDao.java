@@ -5,7 +5,7 @@ package com.kaishengit.dao;
  */
 public class UserDao {
 
-    public UserDao () {
+    /*public UserDao () {
         System.out.println("create userDao");
     }
 
@@ -15,7 +15,7 @@ public class UserDao {
 
     public void destroy() {
         System.out.println("destroy method");
-    }
+    }*/
 
     public void save() {
         System.out.println("userDao saved.....");

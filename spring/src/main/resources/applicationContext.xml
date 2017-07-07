@@ -1,15 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--
-        id : spring容器中bean的名称，整个容器唯一
-        class: 被管理的bean的完全限定名称
-    -->
-    <!--<bean id="userDao,userDao2" class="com.kaishengit.dao.UserDao"/>-->
-    <bean class="com.kaishengit.dao.UserDao"/>
 
-    <!--<alias name="userDao" alias="userDao2"/>-->
+    <bean id="userDao" class="com.kaishengit.dao.UserDao"/>
+    <bean id="weixinDao" class="com.kaishengit.dao.WeixinDao"/>
+
+    <bean id="userService" class="com.kaishengit.service.UserService" autowire="constructor"/>
+
+    <!--<bean id="userService" class="com.kaishengit.service.UserService"
+          p:myUserDao-ref="userDao" p:weixinDao-ref="weiXinDao"/>-->
+
+    <!--<bean id="userService" class="com.kaishengit.service.UserService">
+        <constructor-arg type="com.kaishengit.dao.UserDao" ref="userDao"/>
+        <constructor-arg type="com.kaishengit.dao.WeixinDao" ref="weiXinDao"/>
+    </bean>-->
+
+    <!--<bean id="userService" class="com.kaishengit.service.UserService">
+        <constructor-arg index="0" ref="userDao"/>
+        <constructor-arg index="1" ref="weiXinDao"/>
+    </bean>-->
+
+
+    <!--<bean id="userService" class="com.kaishengit.service.UserService">
+        <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="weixinDao" ref="weiXinDao"/>
+    </bean>-->
+
+    <!--<bean id="userService" class="com.kaishengit.service.UserService">
+        <property name="myUserDao" ref="userDao"/>
+        <property name="weixinDao" ref="weiXinDao"/>
+    </bean>
+-->
+    <!--<bean id="diDemo" class="com.kaishengit.service.DiDemo">
+        <property name="name" value="Tom"/>
+        <property name="score" value="34.56"/>
+        <property name="nameList">
+            <list>
+                <value>aa</value>
+                <value>bb</value>
+                <value>cc</value>
+            </list>
+        </property>
+        <property name="mySet">
+            <set>
+                <value>xx</value>
+                <value>yy</value>
+                <value>zz</value>
+            </set>
+        </property>
+        <property name="userMap">
+            <map>
+                <entry key="myUserDao" value-ref="userDao"/>
+            </map>
+        </property>
+        <property name="config">
+            <props>
+                <prop key="p1">v1</prop>
+                <prop key="p2">v2</prop>
+            </props>
+        </property>
+    </bean>
+-->
 
 </beans>
