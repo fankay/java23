@@ -1,4 +1,4 @@
-package com.kaishengit.com.kaishengit.proxy.cglib;
+package com.kaishengit.proxy.cglib;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;

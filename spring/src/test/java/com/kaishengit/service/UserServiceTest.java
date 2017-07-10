@@ -31,6 +31,7 @@ public class UserServiceTest {
 
         UserService userService = (UserService) ctx.getBean("userService");
         userService.save();
+        //userService.sum();
 
 
     }

@@ -1,4 +1,4 @@
-package com.kaishengit.com.kaishengit.proxy.cglib;
+package com.kaishengit.proxy.cglib;
 
 /**
  * Created by fankay on 2017/7/10.

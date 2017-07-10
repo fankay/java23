@@ -9,23 +9,30 @@ import com.kaishengit.dao.WeixinDao;
 public class UserService {
 
     private UserDao userDao;
-    private WeixinDao weixinDao;
+    /*private WeixinDao weixinDao;
 
     public UserService(UserDao userDao,WeixinDao weixinDao) {
         this.userDao = userDao;
         this.weixinDao = weixinDao;
-    }
+    }*/
 
-    /*public void setMyUserDao(UserDao userDao) {
+    public void setMyUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-
+/*
     public void setWeixinDao(WeixinDao weixinDao) {
         this.weixinDao = weixinDao;
     }*/
 
     public void save() {
         userDao.save();
+        /*if(1==1) {
+            throw new RuntimeException("SQL执行出现了异常");
+        }*/
+    }
+
+    public int sum() {
+        return 100;
     }
 
 }

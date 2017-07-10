@@ -1,7 +1,7 @@
-package com.kaishengit.com.kaishengit.proxy.jdk;
+package com.kaishengit.proxy.jdk;
 
-import com.kaishengit.com.kaishengit.proxy.Computer;
-import com.kaishengit.com.kaishengit.proxy.Lenovo;
+import com.kaishengit.proxy.Computer;
+import com.kaishengit.proxy.Lenovo;
 
 import java.lang.reflect.Proxy;
 

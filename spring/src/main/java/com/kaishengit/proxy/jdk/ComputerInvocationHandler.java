@@ -1,4 +1,4 @@
-package com.kaishengit.com.kaishengit.proxy.jdk;
+package com.kaishengit.proxy.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -25,8 +25,17 @@ public class ComputerInvocationHandler implements InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("加价200");
-        Object result = method.invoke(target,args);
-        return result;
+        try {
+            System.out.println("加价200");
+            Object result = method.invoke(target, args);
+            //。。。。
+            return result;
+        } catch (Exception ex) {
+            //....
+
+        } finally {
+            //。。。
+        }
+        return null;
     }
 }
