@@ -2,37 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <bean id="userDao" class="com.kaishengit.dao.UserDao"/>
-    <bean id="weixinDao" class="com.kaishengit.dao.WeixinDao"/>
-
-    <bean id="userService" class="com.kaishengit.service.UserService" autowire="byType"/>
-
-    <!-- AOP 通知类 -->
-    <bean id="aspectAdvice" class="com.kaishengit.aspect.AspectAdvice"/>
-    <!-- AOP 配置 -->
-    <aop:config>
-        <!-- 告诉Spring通知类是哪一个 -->
-        <aop:aspect ref="aspectAdvice">
-            <!-- 切入点表达式：声明目标对象 -->
-            <aop:pointcut id="myPointCut" expression="execution(* com.kaishengit.service..*.*(..))"/>
-            <!-- 声明通知 -->
-
-            <!-- 前置通知 -->
-            <!--<aop:before method="beforeAdvice" pointcut-ref="myPointCut"/>-->
-            <!-- 后置通知 -->
-            <!--<aop:after-returning method="afterReturningAdvice" pointcut-ref="myPointCut" returning="result"/>-->
-            <!-- 异常通知 -->
-            <!--<aop:after-throwing method="afterThrowingAdvice" pointcut-ref="myPointCut" throwing="ex"/>-->
-            <!-- 最终通知 -->
-            <!--<aop:after method="afterAdvice" pointcut-ref="myPointCut"/>-->
-            <!-- 环绕通知 -->
-            <aop:around method="aroundAdvice" pointcut-ref="myPointCut"/>
-        </aop:aspect>
-    </aop:config>
+    <!-- 开启自动扫描 : 会自动扫描com.kaishengit包及其
+    子包中的加有特殊注解的类，并将这些类放入的Spring容器中-->
+    <context:component-scan base-package="com.kaishengit"/>
+    <!-- 开启基于注解的AOP配置 -->
+    <aop:aspectj-autoproxy/>
 
 </beans>

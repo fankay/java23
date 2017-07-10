@@ -1,38 +1,20 @@
 package com.kaishengit.service;
 
-import com.kaishengit.dao.UserDao;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by fankay on 2017/7/7.
- */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class UserServiceTest {
+
+    @Autowired
+    private UserService userService;
 
     @Test
     public void save() {
-
-
-        /*UserDao userDao = new UserDao();
-
-        UserService userService = new UserService();
-        userService.setUserDao(userDao);
         userService.save();
-*/
-
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        /*DiDemo diDemo = (DiDemo) ctx.getBean("diDemo");
-        diDemo.show();*/
-
-        UserService userService = (UserService) ctx.getBean("userService");
-        userService.save();
-        //userService.sum();
-
-
     }
 }

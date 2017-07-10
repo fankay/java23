@@ -1,8 +1,20 @@
 package com.kaishengit.dao;
 
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import javax.inject.Named;
+
 /**
  * Created by fankay on 2017/7/7.
  */
+//@Repository("dao")
+//@Repository
+@Named
+//@Lazy
+//@Scope("prototype")
 public class UserDao {
 
     /*public UserDao () {

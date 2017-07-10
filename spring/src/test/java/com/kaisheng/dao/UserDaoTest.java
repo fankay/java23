@@ -16,7 +16,7 @@ public class UserDaoTest {
         // 从classpath中读取spring的配置文件
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         //2. 从容器中获取对象
-        UserDao userDao = (UserDao) ctx.getBean("com.kaishengit.dao.UserDao#1");
+        UserDao userDao = (UserDao) ctx.getBean("userDao");
         userDao.save();
 
         ctx.close();
