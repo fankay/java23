@@ -9,11 +9,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.pagehelper.PageInfo;
+import com.kaishengit.Application;
 import com.kaishengit.entity.User;
 import com.kaishengit.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:applicationContext.xml")
+@ContextConfiguration(classes=Application.class)
 public class UserServiceTest {
 	
 	@Autowired
@@ -22,7 +23,7 @@ public class UserServiceTest {
 	@Test
 	public void save() {
 		
-		User user = new User("TomTom","»ªÊ¢¶Ù","123123",1);
+		User user = new User("TomTom","zz","123123",1);
 		userService.save(user);
 	}
 	
