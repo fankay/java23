@@ -9,6 +9,8 @@
     <title></title>
 </head>
 <body>
-    <h1>User List</h1>
+    <h1>User List : ${name}</h1>
+    <img src="/static/img/1.jpg" alt="">
+
 </body>
 </html>

@@ -12,11 +12,28 @@
     <!-- 开启基于注解的MVC -->
     <mvc:annotation-driven/>
 
+    <!-- 静态资源访问 -->
+    <!--<mvc:resources mapping="/static/**" location="/static/"/>-->
+    <mvc:default-servlet-handler/>
+
     <!-- 视图解析器 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <!--文件上传视图解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="100000000"/>
+    </bean>
+    
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.kaishengit.controller.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>
