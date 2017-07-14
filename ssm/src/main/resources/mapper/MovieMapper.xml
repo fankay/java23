@@ -4,8 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kaishengit.mapper.MovieMapper">
 
+    <insert id="save">
+        INSERT into movie(title,daoyan,sendtime,releaseyear,rate)
+        VALUES(#{title},#{daoyan},#{sendtime},#{releaseyear},#{rate})
+    </insert>
+    <update id="update">
+        update movie set title = #{title},daoyan = #{daoyan},
+        sendtime = #{sendtime},releaseyear = #{releaseyear},rate = #{rate}
+        where id = #{id}
+    </update>
+
+    <delete id="delById">
+        DELETE FROM movie where id = #{id}
+    </delete>
+
     <select id="findAll" resultType="Movie">
         SELECT * FROM movie ORDER by id desc
+    </select>
+    <select id="findById" resultType="com.kaishengit.entity.Movie">
+        SELECT * FROM movie where id = #{id}
+    </select>
+    <select id="findByParam" resultType="com.kaishengit.entity.Movie">
+        SELECT * FROM movie
+        <where>
+            <if test="title != null and title != ''">
+                title like concat('%',#{title},'%')
+            </if>
+            <if test="daoyan != null and daoyan != ''">
+                and daoyan like concat('%',#{daoyan},'%')
+            </if>
+            <if test="min != null">
+                and rate &gt;= #{min}
+            </if>
+            <if test="max != null">
+                and rate &lt;= #{max}
+            </if>
+        </where>
     </select>
 
 </mapper>
