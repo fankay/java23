@@ -81,7 +81,7 @@
                 last:'末页',
                 prev:'上一页',
                 next:'下一页',
-                href:"?p={{number}}"
+                href:"?title=${title}&daoyan=${daoyan}&min=${min}&max=${max}&p={{number}}"
             });
 
 
