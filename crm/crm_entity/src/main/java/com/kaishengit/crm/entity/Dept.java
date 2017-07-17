@@ -3,6 +3,7 @@ package com.kaishengit.crm.entity;
 import java.io.Serializable;
 
 /**
+ * 部门表对象
  * @author 
  */
 public class Dept implements Serializable {
