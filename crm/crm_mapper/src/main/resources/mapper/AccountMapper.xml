@@ -170,7 +170,14 @@
         LEFT JOIN dept ON dept.id = account_dept.dept_id
         <where>
             <if test="deptId != null and deptId != ''">
-                dept.id = #{deptId}
+                account.id IN (
+                    SELECT
+                      account_id
+                    FROM
+                      account_dept
+                    WHERE
+                      dept_id = #{deptId}
+                )
             </if>
         </where>
         ORDER by account.id desc
