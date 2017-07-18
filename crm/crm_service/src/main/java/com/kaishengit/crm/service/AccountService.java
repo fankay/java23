@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AccountService {
 
-    void saveAccount(Account account);
+    void saveAccount(Account account,Integer[] deptId);
 
     List<Account> findAllAccount();
 }

@@ -100,7 +100,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.kaishengit.crm.entity.Account">
+  <insert id="insert" parameterType="com.kaishengit.crm.entity.Account" useGeneratedKeys="true" keyProperty="id">
     insert into account (id, user_name, password, 
       create_time, update_time, mobile
       )

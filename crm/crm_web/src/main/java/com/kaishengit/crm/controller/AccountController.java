@@ -3,6 +3,7 @@ package com.kaishengit.crm.controller;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
+import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Dept;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.DeptService;
@@ -10,6 +11,7 @@ import com.kaishengit.dto.AjaxResult;
 import com.kaishengit.dto.ZTreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,8 @@ public class AccountController {
     private DeptService deptService;
 
     @GetMapping
-    public String accountList() {
+    public String accountList(Model model) {
+        model.addAttribute("deptList",deptService.findAllDept());
         return "manage/accounts";
     }
 
@@ -58,12 +61,30 @@ public class AccountController {
         return nodeList;
     }
 
+    /**
+     * 新建部门
+     * @param dept
+     * @return
+     */
     @PostMapping("/dept/new")
     @ResponseBody
     public AjaxResult saveNewDept(Dept dept) {
         deptService.save(dept);
         return AjaxResult.success();
     }
+
+    /**
+     * 新建员工
+     */
+    @PostMapping("/new")
+    @ResponseBody
+    public AjaxResult saveNewAccount(Account account,Integer[] deptId) {
+        accountService.saveAccount(account,deptId);
+        return AjaxResult.success();
+    }
+
+
+
 
 
 }
