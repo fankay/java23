@@ -6,6 +6,7 @@
     <title>凯盛软件CRM-首页</title>
     <%@ include file="../base/base-css.jsp"%>
     <link rel="stylesheet" href="/static/plugins/tree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="/static/plugins/datatables/dataTables.bootstrap.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -21,6 +22,7 @@
                 <div class="col-md-2">
                     <div class="box">
                         <div class="box-body">
+                            <input type="hidden" id="deptId" value="">
                             <button class="btn btn-default" id="addDeptBtn">添加部门</button>
                             <ul id="ztree" class="ztree"></ul>
                         </div>
@@ -37,7 +39,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <table class="table">
+                            <table class="table" id="accountTable">
                                 <thead>
                                 <tr>
                                     <th>姓名</th>
@@ -103,8 +105,61 @@
 <script src="/static/plugins/tree/js/jquery.ztree.all.min.js"></script>
 <script src="/static/plugins/layer/layer.js"></script>
 <script src="/static/plugins/validate/jquery.validate.js"></script>
+<script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
     $(function(){
+
+        var dataTable = $("#accountTable").DataTable({
+            paging: false,
+            "ordering": false,
+            "searching": false,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url : "/manage/account/load.json",
+                data : function(data) {
+                    data.deptId = $("#deptId").val();
+                }
+            },
+            "columns":[
+                {"data":"userName"},
+                {"data":function (row) {
+                    var result = "";
+                    for(var i = 0;i < row.deptList.length;i++) {
+                        result += row.deptList[i].deptName + " &nbsp;&nbsp;";
+                    }
+                    return result;
+                }},
+                {"data":"mobile"},
+                {"data":function (row) {
+                    return "<a href='javascript:;' rel='"+row.id+"' class='delLink'><i class='fa fa-trash text-danger'></i></a>";
+                }}
+            ],
+            language:{
+                "info":  "显示 _START_ 到 _END_ 共 _TOTAL_ 条数据",
+            }
+        });
+
+        $(document).delegate(".delLink","click",function () {
+            var id = $(this).attr("rel");
+            layer.confirm("确定要删除吗?",function (index) {
+                layer.close(index);
+                $.post("/manage/account/del/"+id).done(function(data){
+                    if(data.state == "success") {
+                        layer.msg("删除成功");
+                        dataTable.ajax.reload();
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }).error(function(){
+                    layer.msg("服务器异常");
+                });
+            });
+        });
+
+
+        //ztree
         var setting = {
             data: {
                 simpleData: {
@@ -117,7 +172,9 @@
             },
             callback:{
                 onClick:function(event,treeId,treeNode,clickFlag){
-                    alert(treeNode.id + treeNode.name + treeNode.pId);
+                    //alert(treeNode.id + treeNode.name + treeNode.pId);
+                    $("#deptId").val(treeNode.id);
+                    dataTable.ajax.reload();
                 }
             }
         };
@@ -164,6 +221,7 @@
                     show:true,
                     backdrop:'static'
                 });
+
             }).error(function(){
                 layer.msg("服务器异常");
             });
@@ -210,6 +268,9 @@
                         $("#addAccountForm")[0].reset();
                         $("#addAccountModal").modal('hide');
                         layer.msg("添加成功");
+
+                        //让DataTables自动请求服务器获取最新的数据
+                        dataTable.ajax.reload();
                     } else {
                         layer.msg(data.message);
                     }

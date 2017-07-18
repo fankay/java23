@@ -8,16 +8,16 @@ import com.kaishengit.crm.entity.Dept;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.DeptService;
 import com.kaishengit.dto.AjaxResult;
+import com.kaishengit.dto.DataTableResult;
 import com.kaishengit.dto.ZTreeNode;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +33,35 @@ public class AccountController {
     private DeptService deptService;
 
     @GetMapping
-    public String accountList(Model model) {
-        model.addAttribute("deptList",deptService.findAllDept());
+    public String accountList() {
         return "manage/accounts";
     }
+
+    /**
+     * DataTables加载数据
+     * @return
+     */
+    @GetMapping("/load.json")
+    @ResponseBody
+    public DataTableResult<Account> loadAccountData(HttpServletRequest request) {
+        String draw = request.getParameter("draw");
+        String deptId = request.getParameter("deptId");
+        Integer id = null;
+        if(StringUtils.isNotEmpty(deptId)) {
+            id = Integer.valueOf(deptId);
+        }
+
+        //获取Account的总记录数
+        Long total = accountService.countAll();
+        //获取Account过滤后的数量
+        Long filtedTotal = accountService.countByDeptId(id);
+        //当前页的记录
+        List<Account> accountList = accountService.findByDeptId(id);
+
+        return new DataTableResult<>(draw,total,filtedTotal,accountList);
+    }
+
+
 
     /**
      * 加载ZTree树
@@ -83,6 +108,12 @@ public class AccountController {
         return AjaxResult.success();
     }
 
+    @PostMapping("/del/{id:\\d+}")
+    @ResponseBody
+    public AjaxResult delAccountById(@PathVariable Integer id) {
+        accountService.delAccountById(id);
+        return AjaxResult.success();
+    }
 
 
 
