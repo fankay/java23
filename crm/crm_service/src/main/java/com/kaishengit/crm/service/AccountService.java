@@ -20,4 +20,6 @@ public interface AccountService {
     List<Account> findByDeptId(Integer deptId);
 
     void delAccountById(Integer id);
+
+    Account login(String mobile, String password);
 }

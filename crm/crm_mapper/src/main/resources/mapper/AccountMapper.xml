@@ -192,6 +192,18 @@
             where account_dept.dept_id = #{deptId}
         </if>
     </select>
+    <select id="findByMobileLoadDept" resultMap="acccountDeptMap">
+        SELECT
+            account.*, dept.id AS deptId,
+            dept.dept_name,
+            dept.p_id
+        FROM
+            account
+        LEFT JOIN account_dept ON account.id = account_dept.account_id
+        LEFT JOIN dept ON dept.id = account_dept.dept_id
+        WHERE
+           account.mobile = #{mobile}
+    </select>
 
     <resultMap id="acccountDeptMap" type="Account">
         <id column="id" jdbcType="INTEGER" property="id"/>

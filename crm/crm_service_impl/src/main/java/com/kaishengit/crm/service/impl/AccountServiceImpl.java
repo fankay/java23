@@ -8,7 +8,10 @@ import com.kaishengit.crm.entity.AccountExample;
 import com.kaishengit.crm.mapper.AccountDeptMapper;
 import com.kaishengit.crm.mapper.AccountMapper;
 import com.kaishengit.crm.service.AccountService;
+import com.kaishengit.exception.AuthenticationException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +28,15 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private AccountDeptMapper accountDeptMapper;
+    @Value("${password.salt}")
+    private String passwordSalt;
 
 
     @Override
     @Transactional
     public void saveAccount(Account account, Integer[] deptIds) {
         //添加员工
+        account.setPassword(DigestUtils.md5Hex(passwordSalt + account.getPassword()));
         account.setCreateTime(new Date());
         accountMapper.insert(account);
         //添加员工和部门关系
@@ -80,6 +86,24 @@ public class AccountServiceImpl implements AccountService {
         AccountExample accountExample = new AccountExample();
         accountExample.createCriteria().andIdEqualTo(id);
         accountMapper.deleteByExample(accountExample);
+    }
+
+    /**
+     * 用户登录
+     * @param mobile
+     * @param password
+     * @return
+     */
+    @Override
+    public Account login(String mobile, String password) {
+        //根据手机号码查询Account
+
+        Account account = accountMapper.findByMobileLoadDept(mobile);
+        //根据Account的密码和password参数比较
+        if(DigestUtils.md5Hex(passwordSalt + password).equals(account.getPassword())) {
+            return account;
+        }
+        throw new AuthenticationException("账号或密码错误");
     }
 /*
     @Override
