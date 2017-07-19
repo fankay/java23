@@ -16,6 +16,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //除了 / 之外其他请求都要判断是否登录（session）
         String requestUrl = request.getRequestURI();
+
+        //静态资源过滤
+        if(requestUrl.startsWith("/static/")) {
+            return true;
+        }
+
+
         if("/".equals(requestUrl)) {
             return true;
         } else {

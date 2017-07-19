@@ -1,6 +1,8 @@
 package com.kaishengit.crm.service;
 
 import com.kaishengit.crm.entity.Account;
+import com.kaishengit.exception.AuthenticationException;
+import com.kaishengit.exception.ServiceException;
 
 import java.util.List;
 
@@ -21,5 +23,7 @@ public interface AccountService {
 
     void delAccountById(Integer id);
 
-    Account login(String mobile, String password);
+    Account login(String mobile, String password)  throws AuthenticationException;
+
+    void changePassword(String oldPassword, String password,Account account) throws ServiceException;
 }

@@ -9,6 +9,7 @@ import com.kaishengit.crm.mapper.AccountDeptMapper;
 import com.kaishengit.crm.mapper.AccountMapper;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.exception.AuthenticationException;
+import com.kaishengit.exception.ServiceException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -92,10 +93,11 @@ public class AccountServiceImpl implements AccountService {
      * 用户登录
      * @param mobile
      * @param password
+     * @throws AuthenticationException 如果账号或密码错误，则抛出该异常
      * @return
      */
     @Override
-    public Account login(String mobile, String password) {
+    public Account login(String mobile, String password) throws AuthenticationException {
         //根据手机号码查询Account
 
         Account account = accountMapper.findByMobileLoadDept(mobile);
@@ -104,6 +106,25 @@ public class AccountServiceImpl implements AccountService {
             return account;
         }
         throw new AuthenticationException("账号或密码错误");
+    }
+
+    /**
+     * 修改密码
+     * @param oldPassword 旧密码
+     * @param password 新密码
+     * @param account 被修改对象
+     * @throws ServiceException 如果旧密码错误，则抛出该异常
+     */
+    @Override
+    public void changePassword(String oldPassword, String password,Account account) throws ServiceException {
+        //判断旧密码是否正确
+        if(DigestUtils.md5Hex(passwordSalt + oldPassword).equals(account.getPassword())) {
+            account.setPassword(DigestUtils.md5Hex(passwordSalt + password));
+            //修改密码
+            accountMapper.updateByPrimaryKeySelective(account);
+        } else {
+            throw new ServiceException("旧密码错误");
+        }
     }
 /*
     @Override

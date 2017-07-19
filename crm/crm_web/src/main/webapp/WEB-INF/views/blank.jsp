@@ -8,7 +8,9 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
-    <%@include file="base/base-side.jsp"%>
+    <jsp:include page="base/base-side.jsp">
+        <jsp:param name="active" value="home"/>
+    </jsp:include>
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
 

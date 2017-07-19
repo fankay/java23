@@ -4,6 +4,7 @@ import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.dto.AjaxResult;
 import com.kaishengit.exception.AuthenticationException;
+import com.kaishengit.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping
+    @PostMapping("/")
     @ResponseBody
     public AjaxResult login(String mobile, String password, HttpSession httpSession) {
         try {
@@ -63,6 +64,20 @@ public class LoginController {
     @GetMapping("/profile")
     public String profile() {
         return "profile";
+    }
+
+    @PostMapping("/profile")
+    @ResponseBody
+    public AjaxResult profile(String oldPassword,String password,HttpSession session) {
+        Account account = (Account) session.getAttribute("curr_user");
+        try {
+            accountService.changePassword(oldPassword, password, account);
+            //密码修改成功，重新登录
+            session.invalidate();
+            return AjaxResult.success();
+        } catch (ServiceException ex) {
+            return AjaxResult.error(ex.getMessage());
+        }
     }
 
 }
