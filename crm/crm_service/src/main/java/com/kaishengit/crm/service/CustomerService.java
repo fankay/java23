@@ -18,4 +18,10 @@ public interface CustomerService {
     void saveNewCustomer(Customer customer, Account account);
 
     PageInfo<Customer> findMyCustomer(Map<String,Object> queryParam);
+
+    Customer findById(Integer id);
+
+    void editCustomer(Customer customer);
+
+    void delCustomer(Customer customer);
 }

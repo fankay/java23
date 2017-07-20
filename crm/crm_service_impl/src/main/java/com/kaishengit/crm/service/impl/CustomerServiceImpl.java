@@ -68,4 +68,38 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customerList = customerMapper.findByQueryParam(queryParam);
         return new PageInfo<>(customerList);
     }
+
+    /**
+     * 根据ID查找客户对象
+     * @param id
+     * @return
+     */
+    @Override
+    public Customer findById(Integer id) {
+        return customerMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 编辑客户资料
+     * @param customer
+     */
+    @Override
+    public void editCustomer(Customer customer) {
+        //添加最后修改时间
+        customer.setUpdateTime(new Date());
+        customerMapper.updateByPrimaryKeySelective(customer);
+    }
+
+    /**
+     * 删除客户
+     * @param customer
+     */
+    @Override
+    public void delCustomer(Customer customer) {
+        //TODO 删除跟进记录
+        //TODO 删除日程安排
+        //TODO 删除相关资料
+        //删除客户
+        customerMapper.deleteByPrimaryKey(customer.getId());
+    }
 }
