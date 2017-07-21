@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,12 @@ public interface CustomerService {
     void editCustomer(Customer customer);
 
     void delCustomer(Customer customer);
+
+    void shareCustomerToPublic(Customer customer,Account account);
+
+    void transferCustomerToAccount(Customer customer, Integer accountId,Account account);
+
+    List<Customer> findByAccountId(Integer accountId);
+
+    void exportAccountCustomerToExcel(Account account, OutputStream outputStream);
 }

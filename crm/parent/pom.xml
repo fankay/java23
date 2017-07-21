@@ -35,6 +35,7 @@
         <commons-codec-version>1.10</commons-codec-version>
         <jackson-version>2.8.7</jackson-version>
         <guava-version>22.0</guava-version>
+        <poi-version>3.16</poi-version>
 
         <crm_entity_version>1.0-SNAPSHOT</crm_entity_version>
         <crm_mapper_version>1.0-SNAPSHOT</crm_mapper_version>
@@ -158,6 +159,12 @@
                 <artifactId>guava</artifactId>
                 <version>${guava-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi-version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.kaishengit</groupId>

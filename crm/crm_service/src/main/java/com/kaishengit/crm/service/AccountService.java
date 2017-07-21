@@ -4,6 +4,7 @@ import com.kaishengit.crm.entity.Account;
 import com.kaishengit.exception.AuthenticationException;
 import com.kaishengit.exception.ServiceException;
 
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -26,4 +27,5 @@ public interface AccountService {
     Account login(String mobile, String password)  throws AuthenticationException;
 
     void changePassword(String oldPassword, String password,Account account) throws ServiceException;
+    
 }

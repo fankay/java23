@@ -237,6 +237,7 @@
             and
             (cust_name like concat('%',#{keyword},'%') or mobile like concat('%',#{keyword},'%'))
         </if>
+        order by id desc
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update customer

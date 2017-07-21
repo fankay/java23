@@ -61,7 +61,7 @@
                     <h3 class="box-title">我的客户</h3>
                     <div class="box-tools pull-right">
                         <a href="/customer/my/new" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新增客户</a>
-                        <button class="btn btn-primary btn-sm"><i class="fa fa-file-excel-o"></i> 导出Excel</button>
+                        <a href="/customer/my/export" class="btn btn-primary btn-sm"><i class="fa fa-file-excel-o"></i> 导出Excel</a>
                     </div>
                 </div>
                 <div class="box-body no-padding">
@@ -135,7 +135,7 @@
                 last:'末页',
                 prev:'上一页',
                 next:'下一页',
-                href:"?p={{number}}"
+                href:"?p={{number}}&keyword=${keyword}"
             });
         </c:if>
 

@@ -6,6 +6,7 @@ import com.kaishengit.crm.controller.exception.ForbiddenException;
 import com.kaishengit.crm.controller.exception.NotFoundException;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
+import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.util.StringsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -26,6 +28,8 @@ public class CustomerController extends BaseController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private AccountService accountService;
 
     /**
      * 我的客户首页
@@ -87,6 +91,7 @@ public class CustomerController extends BaseController {
             throw new ForbiddenException();
         }
         model.addAttribute("customer",customer);
+        model.addAttribute("accountList",accountService.findAllAccount());
         return "customer/info";
     }
 
@@ -142,8 +147,63 @@ public class CustomerController extends BaseController {
         return "redirect:/customer/my";
     }
 
+    /**
+     * 将客户放入公海
+     */
+    @GetMapping("/my/{id:\\d+}/share/public")
+    public String shareCustomerToPublic(@PathVariable Integer id,HttpSession session,
+                                        RedirectAttributes redirectAttributes) {
+        Account account = getCurrUser(session);
+        Customer customer = customerService.findById(id);
+        if(customer == null) {
+            throw new NotFoundException();
+        }
+        if(!customer.getAccountId().equals(account.getId())) {
+            throw new ForbiddenException();
+        }
+
+        customerService.shareCustomerToPublic(customer,account);
+        redirectAttributes.addFlashAttribute("message","成功将客户[ "+customer.getCustName()+" ]放入公海");
+        return "redirect:/customer/my";
+    }
+
+    /**
+     * 将客户转移给他人
+     */
+    @GetMapping("/my/{custId:\\d+}/tran/{accountId:\\d+}")
+    public String tranCustomerToAccount(@PathVariable Integer custId,
+                                        @PathVariable Integer accountId,
+                                        HttpSession session,
+                                        RedirectAttributes redirectAttributes) {
+        Account account = getCurrUser(session);
+        Customer customer = customerService.findById(custId);
+        if(customer == null) {
+            throw new NotFoundException();
+        }
+        if(!customer.getAccountId().equals(account.getId())) {
+            throw new ForbiddenException();
+        }
+
+        customerService.transferCustomerToAccount(customer,accountId,account);
+
+        redirectAttributes.addFlashAttribute("message","成功将客户[ "+customer.getCustName()+" ]转移");
+        return "redirect:/customer/my";
+    }
 
 
+    /**
+     * 将客户导出为excel
+     */
+    @GetMapping("/my/export")
+    public void exportExcel(HttpServletResponse response,HttpSession session) throws Exception {
+        Account account = getCurrUser(session);
+
+        //告诉浏览器输出内容的MIME
+        response.setContentType("application/vnd.ms-excel");
+        //设置弹出对话框的文件名称
+        response.addHeader("Content-Disposition"," attachment;filename=\"customer.xls\"");
+        customerService.exportAccountCustomerToExcel(account,response.getOutputStream());
+    }
 
 
 
