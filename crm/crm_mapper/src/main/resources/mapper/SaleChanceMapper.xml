@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.SaleChanceMapper">
+    <resultMap id="BaseResultMap" type="com.kaishengit.crm.entity.SaleChance">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cust_id" jdbcType="INTEGER" property="custId"/>
+        <result column="worth" jdbcType="REAL" property="worth"/>
+        <result column="progress" jdbcType="VARCHAR" property="progress"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_time" jdbcType="TIMESTAMP" property="lastTime"/>
+        <result column="account_id" jdbcType="INTEGER" property="accountId"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kaishengit.crm.entity.SaleChance">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, name, cust_id, worth, progress, create_time, last_time, account_id
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="selectByExampleWithBLOBs" parameterType="com.kaishengit.crm.entity.SaleChanceExample"
+            resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from sale_chance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" parameterType="com.kaishengit.crm.entity.SaleChanceExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from sale_chance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from sale_chance
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sale_chance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.kaishengit.crm.entity.SaleChanceExample">
+        delete from sale_chance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.kaishengit.crm.entity.SaleChance" useGeneratedKeys="true" keyProperty="id">
+    insert into sale_chance (id, name, cust_id, 
+      worth, progress, create_time, 
+      last_time, account_id, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{custId,jdbcType=INTEGER}, 
+      #{worth,jdbcType=REAL}, #{progress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{accountId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.kaishengit.crm.entity.SaleChance">
+        insert into sale_chance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="custId != null">
+                cust_id,
+            </if>
+            <if test="worth != null">
+                worth,
+            </if>
+            <if test="progress != null">
+                progress,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastTime != null">
+                last_time,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="custId != null">
+                #{custId,jdbcType=INTEGER},
+            </if>
+            <if test="worth != null">
+                #{worth,jdbcType=REAL},
+            </if>
+            <if test="progress != null">
+                #{progress,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.kaishengit.crm.entity.SaleChanceExample" resultType="java.lang.Long">
+        select count(*) from sale_chance
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="findByQueryParam" resultMap="saleChanceLoadCustomer">
+        SELECT
+            sale_chance.*, customer.cust_name,
+            customer.job_title,
+            customer.mobile,
+            customer.address,
+            customer.trade,
+            customer.source,
+            customer.`level`,
+            customer.mark,
+            customer.last_contact_time,
+            customer.create_time AS cust_create_time,
+            customer.update_time,
+            customer.reminder,
+            customer.sex
+        FROM
+            sale_chance
+        LEFT JOIN customer ON sale_chance.cust_id = customer.id
+        WHERE
+            sale_chance.account_id = #{accountId}
+        order by sale_chance.last_time desc
+    </select>
+    <select id="findById" resultMap="saleChanceLoadCustomer">
+        SELECT
+            sale_chance.*, customer.cust_name,
+            customer.job_title,
+            customer.mobile,
+            customer.address,
+            customer.trade,
+            customer.source,
+            customer.`level`,
+            customer.mark,
+            customer.last_contact_time,
+            customer.create_time AS cust_create_time,
+            customer.update_time,
+            customer.reminder,
+            customer.sex
+        FROM
+            sale_chance
+        LEFT JOIN customer ON sale_chance.cust_id = customer.id
+        WHERE
+            sale_chance.id = #{id}
+    </select>
+    <resultMap id="saleChanceLoadCustomer" type="SaleChance">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="cust_id" jdbcType="INTEGER" property="custId"/>
+        <result column="worth" jdbcType="REAL" property="worth"/>
+        <result column="progress" jdbcType="VARCHAR" property="progress"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_time" jdbcType="TIMESTAMP" property="lastTime"/>
+        <result column="account_id" jdbcType="INTEGER" property="accountId"/>
+        <association property="customer" javaType="Customer">
+            <id column="cust_id" jdbcType="INTEGER" property="id"/>
+            <result column="cust_name" jdbcType="VARCHAR" property="custName"/>
+            <result column="job_title" jdbcType="VARCHAR" property="jobTitle"/>
+            <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+            <result column="address" jdbcType="VARCHAR" property="address"/>
+            <result column="trade" jdbcType="VARCHAR" property="trade"/>
+            <result column="source" jdbcType="VARCHAR" property="source"/>
+            <result column="level" jdbcType="VARCHAR" property="level"/>
+            <result column="mark" jdbcType="VARCHAR" property="mark"/>
+            <result column="account_id" jdbcType="INTEGER" property="accountId"/>
+            <result column="last_contact_time" jdbcType="TIMESTAMP" property="lastContactTime"/>
+            <result column="cust_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+            <result column="reminder" jdbcType="VARCHAR" property="reminder"/>
+            <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        </association>
+    </resultMap>
+    <update id="updateByExampleSelective" parameterType="map">
+        update sale_chance
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.custId != null">
+                cust_id = #{record.custId,jdbcType=INTEGER},
+            </if>
+            <if test="record.worth != null">
+                worth = #{record.worth,jdbcType=REAL},
+            </if>
+            <if test="record.progress != null">
+                progress = #{record.progress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.lastTime != null">
+                last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.accountId != null">
+                account_id = #{record.accountId,jdbcType=INTEGER},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update sale_chance
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        cust_id = #{record.custId,jdbcType=INTEGER},
+        worth = #{record.worth,jdbcType=REAL},
+        progress = #{record.progress,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+        account_id = #{record.accountId,jdbcType=INTEGER},
+        content = #{record.content,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update sale_chance
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        cust_id = #{record.custId,jdbcType=INTEGER},
+        worth = #{record.worth,jdbcType=REAL},
+        progress = #{record.progress,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+        account_id = #{record.accountId,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.crm.entity.SaleChance">
+        update sale_chance
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="custId != null">
+                cust_id = #{custId,jdbcType=INTEGER},
+            </if>
+            <if test="worth != null">
+                worth = #{worth,jdbcType=REAL},
+            </if>
+            <if test="progress != null">
+                progress = #{progress,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastTime != null">
+                last_time = #{lastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kaishengit.crm.entity.SaleChance">
+    update sale_chance
+    set name = #{name,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=INTEGER},
+      worth = #{worth,jdbcType=REAL},
+      progress = #{progress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.kaishengit.crm.entity.SaleChance">
+    update sale_chance
+    set name = #{name,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=INTEGER},
+      worth = #{worth,jdbcType=REAL},
+      progress = #{progress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

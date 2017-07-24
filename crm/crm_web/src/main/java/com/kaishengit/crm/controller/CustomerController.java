@@ -6,8 +6,10 @@ import com.kaishengit.crm.controller.exception.ForbiddenException;
 import com.kaishengit.crm.controller.exception.NotFoundException;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
+import com.kaishengit.crm.entity.SaleChance;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
+import com.kaishengit.crm.service.SaleChanceService;
 import com.kaishengit.util.StringsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +33,8 @@ public class CustomerController extends BaseController {
     private CustomerService customerService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private SaleChanceService saleChanceService;
 
     /**
      * 我的客户首页
@@ -90,8 +95,13 @@ public class CustomerController extends BaseController {
         if(!customer.getAccountId().equals(account.getId())) {
             throw new ForbiddenException();
         }
+
+        //查找客户关联的销售机会列表
+        List<SaleChance> saleChanceList = saleChanceService.findSaleChanceByCustId(id);
+
         model.addAttribute("customer",customer);
         model.addAttribute("accountList",accountService.findAllAccount());
+        model.addAttribute("chanceList",saleChanceList);
         return "customer/info";
     }
 

@@ -87,10 +87,17 @@
                 <div class="col-md-8">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">跟进记录</h3>
+                            <h3 class="box-title">销售机会</h3>
                         </div>
                         <div class="box-body">
-
+                            <c:if test="${empty chanceList}">
+                                <li class="list-group-item">暂无销售机会</li>
+                            </c:if>
+                            <ul class="list-group">
+                                <c:forEach items="${chanceList}" var="chance">
+                                    <li class="list-group-item"><a href="/sales/my/${chance.id}" target="_blank">${chance.name}</a></li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </div>
