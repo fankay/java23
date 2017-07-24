@@ -2,6 +2,7 @@ package com.kaishengit.crm.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.google.zxing.WriterException;
 import com.kaishengit.crm.controller.exception.ForbiddenException;
 import com.kaishengit.crm.controller.exception.NotFoundException;
 import com.kaishengit.crm.entity.Account;
@@ -10,6 +11,7 @@ import com.kaishengit.crm.entity.SaleChance;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.crm.service.SaleChanceService;
+import com.kaishengit.util.QrCodeUtil;
 import com.kaishengit.util.StringsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -103,6 +107,35 @@ public class CustomerController extends BaseController {
         model.addAttribute("accountList",accountService.findAllAccount());
         model.addAttribute("chanceList",saleChanceList);
         return "customer/info";
+    }
+
+    /**
+     * 显示客户二维码图片
+     */
+    @GetMapping("/my/qrcode/{id:\\d+}")
+    public void showCustomerQRCode(@PathVariable Integer id,HttpServletResponse response) {
+        Customer customer = customerService.findById(id);
+
+        response.setContentType("image/png");
+
+        //vcard 格式 https://zxing.appspot.com/generator
+        StringBuffer str = new StringBuffer();
+        str.append("BEGIN:VCARD\r\n");
+        str.append("VERSION:3.0\r\n");
+        str.append("N:").append(customer.getCustName()).append("\r\n");
+        str.append("TITLE:").append(customer.getJobTitle()).append("\r\n");
+        str.append("TEL:").append(customer.getMobile()).append("\r\n");
+        str.append("ADR:").append(customer.getAddress()).append("\r\n");
+        str.append("END:VCARD\r\n");
+
+        try {
+            OutputStream outputStream = response.getOutputStream();
+            QrCodeUtil.writeToStream(str.toString(), outputStream, 300, 300);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException|WriterException ex) {
+            throw new RuntimeException("渲染二维码失败",ex);
+        }
     }
 
     /**

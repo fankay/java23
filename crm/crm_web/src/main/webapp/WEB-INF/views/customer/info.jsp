@@ -103,6 +103,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="box">
+                        <div class="box-body" style="text-align: center">
+                            <img src="/customer/my/qrcode/${customer.id}" alt="">
+                        </div>
+                    </div>
+                    <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">日程安排</h3>
                         </div>

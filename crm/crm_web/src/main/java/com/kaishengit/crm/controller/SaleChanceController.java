@@ -24,7 +24,7 @@ import java.util.Map;
  * 销售机会控制器
  */
 @Controller
-@RequestMapping("/sales/")
+@RequestMapping("/sales")
 public class SaleChanceController extends BaseController {
 
     @Autowired
