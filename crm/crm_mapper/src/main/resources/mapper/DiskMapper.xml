@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.crm.mapper.DiskMapper">
+  <resultMap id="BaseResultMap" type="com.kaishengit.crm.entity.Disk">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="file_size" jdbcType="VARCHAR" property="fileSize" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="download_count" jdbcType="INTEGER" property="downloadCount" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="save_name" jdbcType="VARCHAR" property="saveName" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, file_size, p_id, type, update_time, account_id, download_count, password, 
+    save_name, md5
+  </sql>
+  <select id="selectByExample" parameterType="com.kaishengit.crm.entity.DiskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from disk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from disk
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from disk
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kaishengit.crm.entity.DiskExample">
+    delete from disk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kaishengit.crm.entity.Disk">
+    insert into disk (id, name, file_size, 
+      p_id, type, update_time, 
+      account_id, download_count, password, 
+      save_name, md5)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fileSize,jdbcType=VARCHAR}, 
+      #{pId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{accountId,jdbcType=INTEGER}, #{downloadCount,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{saveName,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaishengit.crm.entity.Disk">
+    insert into disk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fileSize != null">
+        file_size,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="accountId != null">
+        account_id,
+      </if>
+      <if test="downloadCount != null">
+        download_count,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="saveName != null">
+        save_name,
+      </if>
+      <if test="md5 != null">
+        md5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="downloadCount != null">
+        #{downloadCount,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saveName != null">
+        #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kaishengit.crm.entity.DiskExample" resultType="java.lang.Long">
+    select count(*) from disk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update disk
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null">
+        file_size = #{record.fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pId != null">
+        p_id = #{record.pId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountId != null">
+        account_id = #{record.accountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.downloadCount != null">
+        download_count = #{record.downloadCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saveName != null">
+        save_name = #{record.saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.md5 != null">
+        md5 = #{record.md5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update disk
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=VARCHAR},
+      p_id = #{record.pId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      account_id = #{record.accountId,jdbcType=INTEGER},
+      download_count = #{record.downloadCount,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      save_name = #{record.saveName,jdbcType=VARCHAR},
+      md5 = #{record.md5,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.crm.entity.Disk">
+    update disk
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        file_size = #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null">
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="downloadCount != null">
+        download_count = #{downloadCount,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saveName != null">
+        save_name = #{saveName,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaishengit.crm.entity.Disk">
+    update disk
+    set name = #{name,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=INTEGER},
+      download_count = #{downloadCount,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      save_name = #{saveName,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
