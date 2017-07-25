@@ -260,7 +260,7 @@ public class CustomerController extends BaseController {
     /**
      * 给客户添加待办事项
      */
-    @PostMapping("/my/{id:\\d+}/task/new")
+    @PostMapping("/my/{customerId:\\d+}/task/new")
     public String newTaskToCustomer(Task task) {
         taskService.saveNewTask(task);
         return "redirect:/customer/my/"+task.getCustId();

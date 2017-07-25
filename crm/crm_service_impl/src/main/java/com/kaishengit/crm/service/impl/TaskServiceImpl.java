@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
     public void saveNewTask(Task task) {
         task.setCreateTime(new Date());
         task.setDone(false);
-        taskMapper.insertSelective(task);
+        taskMapper.insert(task);
     }
 
     /**
