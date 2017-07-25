@@ -8,9 +8,11 @@ import com.kaishengit.crm.controller.exception.NotFoundException;
 import com.kaishengit.crm.entity.Account;
 import com.kaishengit.crm.entity.Customer;
 import com.kaishengit.crm.entity.SaleChance;
+import com.kaishengit.crm.entity.Task;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.crm.service.SaleChanceService;
+import com.kaishengit.crm.service.TaskService;
 import com.kaishengit.util.QrCodeUtil;
 import com.kaishengit.util.StringsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class CustomerController extends BaseController {
     private AccountService accountService;
     @Autowired
     private SaleChanceService saleChanceService;
+    @Autowired
+    private TaskService taskService;
 
     /**
      * 我的客户首页
@@ -103,9 +107,13 @@ public class CustomerController extends BaseController {
         //查找客户关联的销售机会列表
         List<SaleChance> saleChanceList = saleChanceService.findSaleChanceByCustId(id);
 
+        //查找客户关联的未完成的待办事项列表
+        List<Task> taskList = taskService.findUnDoneTaskByCustId(customer.getId());
+
         model.addAttribute("customer",customer);
         model.addAttribute("accountList",accountService.findAllAccount());
         model.addAttribute("chanceList",saleChanceList);
+        model.addAttribute("taskList",taskList);
         return "customer/info";
     }
 
@@ -249,6 +257,14 @@ public class CustomerController extends BaseController {
     }
 
 
+    /**
+     * 给客户添加待办事项
+     */
+    @PostMapping("/my/{id:\\d+}/task/new")
+    public String newTaskToCustomer(Task task) {
+        taskService.saveNewTask(task);
+        return "redirect:/customer/my/"+task.getCustId();
+    }
 
 
 

@@ -110,17 +110,10 @@
                 </ul>
             </li>
             <!-- 待办事项 -->
-            <li class="treeview">
-                <a href="#">
+            <li class="${param.active == 'task' ? 'active' : ''}">
+                <a href="/task">
                     <i class="fa fa-calendar"></i> <span>待办事项</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="/task"><i class="fa fa-circle-o"></i> 待办列表</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> 逾期事项</a></li>
-                </ul>
             </li>
             <!-- 统计报表 -->
             <li class="treeview">
