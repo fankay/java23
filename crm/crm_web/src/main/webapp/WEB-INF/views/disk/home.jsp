@@ -79,7 +79,11 @@
                                     </td>
                                     <td>${disk.name}</td>
                                     <td><fmt:formatDate value="${disk.updateTime}" pattern="MM月DD日"/> </td>
-                                    <td width="100"></td>
+                                    <td width="100">
+                                        <c:if test="${disk.type == 'file'}">
+                                            ${disk.fileSize}
+                                        </c:if>
+                                    </td>
                                     <td width="150">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -161,9 +165,9 @@
                         layer.msg("创建成功");
                         $("#dataTable").html("");
                         for(var i = 0;i < resp.data.length;i++) {
-                            var obj = resp.data[i];
-                            obj.updateTime = moment(obj.updateTime).format("MM月DD日");
-                            var html = template("trTemplate", obj);
+                            var obj = resp.data[i]; //{id:1,name:'',fileSize:}
+                            obj.updateTime = moment(obj.updateTime).format("MM月DD日"); //将时间戳格式化
+                            var html = template("trTemplate", obj); //将JSON对象传递给模板对象，转换为HTML
                             $("#dataTable").append(html);
                         }
                     } else {
@@ -189,19 +193,27 @@
             fileVal:'file',
             formData:{
                 "pId":pid,
-                "accountId":accountId,
-                "type":'file'
-            }
+                "accountId":accountId
+            } //发送请求给服务器的额外数据
         });
 
         var loadIndex = -1;
         //开始上传
         uploader.on('uploadStart',function (file) {
-            loadIndex = layer.load(1);
+            loadIndex = layer.load(2);
         });
         //上传成功
         uploader.on('uploadSuccess',function (file,resp) {
-            
+            if(resp.state == 'success') {
+                layer.msg("文件上传成功");
+                $("#dataTable").html("");
+                for(var i = 0;i < resp.data.length;i++) {
+                    var obj = resp.data[i]; //{id:1,name:'',fileSize:}
+                    obj.updateTime = moment(obj.updateTime).format("MM月DD日"); //将时间戳格式化
+                    var html = template("trTemplate", obj); //将JSON对象传递给模板对象，转换为HTML
+                    $("#dataTable").append(html);
+                }
+            }
         });
         //上传失败
         uploader.on('uploadError',function (file) {

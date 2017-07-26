@@ -47,6 +47,10 @@
             <groupId>com.kaishengit</groupId>
             <artifactId>crm_common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
     </dependencies>
 
 
