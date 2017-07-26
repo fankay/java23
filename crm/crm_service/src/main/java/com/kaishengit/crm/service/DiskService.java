@@ -3,6 +3,7 @@ package com.kaishengit.crm.service;
 import com.kaishengit.crm.entity.Disk;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 public interface DiskService {
@@ -14,4 +15,5 @@ public interface DiskService {
 
     void saveNewFile(Disk disk, InputStream inputStream);
 
+    void downloadFile(OutputStream outputStream, Disk disk);
 }

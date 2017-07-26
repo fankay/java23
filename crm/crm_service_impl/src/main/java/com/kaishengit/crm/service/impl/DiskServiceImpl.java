@@ -89,4 +89,33 @@ public class DiskServiceImpl implements DiskService {
             throw new ServiceException("上传文件异常",ex);
         }
     }
+
+    /**
+     * 下载文件
+     * @param outputStream
+     * @param disk
+     */
+    @Override
+    @Transactional
+    public void downloadFile(OutputStream outputStream, Disk disk) {
+        //更新下载数量
+        disk.setDownloadCount(disk.getDownloadCount() + 1);
+        diskMapper.updateByPrimaryKey(disk);
+
+        try {
+            File file = new File(uploadPath, disk.getSaveName());
+            if(file.exists()) {
+                InputStream inputStream = new FileInputStream(file);
+                IOUtils.copy(inputStream,outputStream);
+
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
+            } else {
+                throw new ServiceException("下载资源不存在或已被删除");
+            }
+        } catch (IOException ex) {
+            throw new ServiceException("下载文件异常",ex);
+        }
+    }
 }

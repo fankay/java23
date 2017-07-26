@@ -1,5 +1,6 @@
 package com.kaishengit.crm.controller;
 
+import com.kaishengit.crm.controller.exception.NotFoundException;
 import com.kaishengit.crm.entity.Disk;
 import com.kaishengit.crm.service.DiskService;
 import com.kaishengit.dto.AjaxResult;
@@ -10,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -80,6 +83,29 @@ public class NetDiskController extends BaseController {
     }
 
 
+    /**
+     * 文件下载
+     */
+    @GetMapping("/download")
+    public void downloadFile(HttpServletResponse response,
+                             @RequestParam(name = "_") Integer id) throws IOException {
+        Disk disk = diskService.findById(id);
+        if(disk == null || disk.getType().equals(Disk.DISK_FOLDER_TYPE)) {
+            throw new NotFoundException();
+        }
+
+        //设定响应头
+        response.setContentType("application/octet-stream");
+        //设定弹出下载对话框中的文件名
+        //处理中文的文件名 UTF-8 -> ISO8859-1
+        String fileName = new String(disk.getName().getBytes("UTF-8"),"ISO8859-1");
+        response.setHeader("Content-Disposition","attachment; filename=\""+fileName+"\"");
+
+        //获取响应输出流
+        OutputStream outputStream = response.getOutputStream();
+
+        diskService.downloadFile(outputStream,disk);
+    }
 
 
 

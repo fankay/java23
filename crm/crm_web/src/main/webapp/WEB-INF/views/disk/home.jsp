@@ -55,14 +55,28 @@
                         <c:if test="${not empty disk}">
                             <a href="/disk?_=${disk.pId}" class="btn btn-default btn-sm"><i class="fa fa-arrow-left"></i> 返回上级</a>
                         </c:if>
-                        <div id="picker"><i class="fa fa-upload"></i> 上传文件</div>
-                        <button id="showNewFolderModal" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新建文件夹</button>
+                        <c:choose>
+                            <c:when test="${disk.type == 'file'}">
+                                <a href="/disk/download?_=${disk.id}" class="btn btn-sm btn-danger"><i class="fa fa-download"></i> 下载</a>
+                            </c:when>
+                            <c:otherwise>
+                                <div id="picker"><i class="fa fa-upload"></i> 上传文件</div>
+                                <button id="showNewFolderModal" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> 新建文件夹</button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 <div class="box-body no-padding">
                      <table class="table table-hover" >
                          <tbody id="dataTable">
-                            <c:if test="${empty diskList}">
+                            <c:if test="${disk.type == 'file'}">
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="/disk/download?_=${disk.id}" class="btn btn-sm btn-danger"><i class="fa fa-download"></i> 下载</a>
+                                    </td>
+                                </tr>
+                            </c:if>
+                            <c:if test="${empty diskList and disk.type == 'dir'}">
                                 <tr><td colspan="4">暂无内容</td></tr>
                             </c:if>
                             <c:forEach items="${diskList}" var="disk">
