@@ -57,14 +57,16 @@ public class TaskServiceImpl implements TaskService {
         //判断是否有提醒时间，如果有则需要添加动态定时任务
         if(StringUtils.isNotEmpty(task.getRemindTime())) {
             JobDataMap dataMap = new JobDataMap();
-            dataMap.put("to",task.getAccountId());
+            //dataMap.put("to",task.getAccountId());
+            //dataMap.put("message",task.getTitle());
+            dataMap.putAsString("to",task.getAccountId());
             dataMap.put("message",task.getTitle());
 
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
             //jobDetail
             JobDetail jobDetail = JobBuilder.newJob(WeixinNotifyJob.class)
-                    .withIdentity(new JobKey("account:"+task.getAccountId(),"weixinGroup"))
+                    .withIdentity(new JobKey("account:"+task.getAccountId()+":"+task.getId(),"weixinGroup"))
                     .setJobData(dataMap).build();
             //Trigger CRON 2017-09-23 12 : 55 - 0 55 12 23 09 ? 2017-2017
 
@@ -137,15 +139,17 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public void delTask(Task task) {
-        taskMapper.deleteByPrimaryKey(task.getId());
+
         //判断删除的Task是否有提醒时间，如果有则删除定时任务
         if(StringUtils.isNotEmpty(task.getRemindTime())) {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             try {
-                scheduler.deleteJob(new JobKey("account:" + task.getAccountId(), "weixinGroup"));
+                scheduler.deleteJob(new JobKey("account:" + task.getAccountId()+":"+task.getId(), "weixinGroup"));
             } catch (SchedulerException ex) {
                 throw new ServiceException("删除调度器任务异常",ex);
             }
         }
+
+        taskMapper.deleteByPrimaryKey(task.getId());
     }
 }

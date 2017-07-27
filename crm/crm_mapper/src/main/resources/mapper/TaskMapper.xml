@@ -105,7 +105,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.kaishengit.crm.entity.Task">
+    <insert id="insert" parameterType="com.kaishengit.crm.entity.Task" useGeneratedKeys="true" keyProperty="id">
     insert into task (id, title, finish_time, 
       remind_time, done, account_id, 
       cust_id, sale_id, create_time

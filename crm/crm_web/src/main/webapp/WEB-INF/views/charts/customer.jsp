@@ -68,7 +68,7 @@
         $.get("/charts/customer/bar.json").done(function (resp) {
             var levelArray = [];
             var dataArray = [];
-
+            //[{level:'*',num:3},{level:'**',num:5}]
             for(var i = 0;i < resp.data.length;i++) {
                 var obj = resp.data[i];
                 levelArray.push(obj.level);
