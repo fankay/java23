@@ -33,4 +33,7 @@ public interface CustomerService {
     List<Customer> findByAccountId(Integer accountId);
 
     void exportAccountCustomerToExcel(Account account, OutputStream outputStream);
+
+    List<Map<String,Object>> findCustomerLevelCount();
+
 }

@@ -239,6 +239,9 @@
         </if>
         order by id desc
     </select>
+    <select id="findCostomerLevelCount" resultType="java.util.Map">
+        select level,count(*) as num from customer GROUP BY level
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update customer
         <set>

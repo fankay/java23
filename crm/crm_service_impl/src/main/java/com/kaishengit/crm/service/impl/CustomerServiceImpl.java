@@ -188,4 +188,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ServiceException("导出excel异常",ex);
         }
     }
+
+    @Override
+    public List<Map<String,Object>> findCustomerLevelCount() {
+        return customerMapper.findCostomerLevelCount();
+    }
 }

@@ -30,4 +30,6 @@ public interface CustomerMapper {
     int updateByPrimaryKey(Customer record);
 
     List<Customer> findByQueryParam(Map<String, Object> queryParam);
+
+    List<Map<String,Object>> findCostomerLevelCount();
 }
