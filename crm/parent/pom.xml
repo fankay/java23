@@ -13,6 +13,7 @@
         <module>../crm_common</module>
         <module>../crm_entity</module>
         <module>../crm_mapper</module>
+        <module>../crm_weixin</module>
         <module>../crm_service</module>
         <module>../crm_service_impl</module>
         <module>../crm_web</module>
@@ -42,6 +43,8 @@
         <quartz-version>2.2.1</quartz-version>
         <cron-util-version>6.0.2</cron-util-version>
         <joda-time-version>2.9.9</joda-time-version>
+        <ok-http-version>3.8.1</ok-http-version>
+        <fastjson-version>1.2.35</fastjson-version>
 
         <crm_entity_version>1.0-SNAPSHOT</crm_entity_version>
         <crm_mapper_version>1.0-SNAPSHOT</crm_mapper_version>
@@ -211,6 +214,17 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time-version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${ok-http-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson-version}</version>
+            </dependency>
+
 
 
             <dependency>
@@ -236,6 +250,11 @@
             <dependency>
                 <groupId>com.kaishengit</groupId>
                 <artifactId>crm_common</artifactId>
+                <version>${crm_common_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaishengit</groupId>
+                <artifactId>weixin</artifactId>
                 <version>${crm_common_version}</version>
             </dependency>
 

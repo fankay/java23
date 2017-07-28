@@ -33,11 +33,11 @@
         <!--是否覆盖数据库中已存在的任务-->
         <property name="overwriteExistingJobs" value="true"/>
 
-        <property name="triggers">
+       <!-- <property name="triggers">
             <list>
                 <ref bean="cronTrigger"/>
             </list>
-        </property>
+        </property>-->
     </bean>
 
 </beans>

@@ -71,6 +71,10 @@
             <groupId>com.kaishengit</groupId>
             <artifactId>crm_common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kaishengit</groupId>
+            <artifactId>weixin</artifactId>
+        </dependency>
 
     </dependencies>
 
