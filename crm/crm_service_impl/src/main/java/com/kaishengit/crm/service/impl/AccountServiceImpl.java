@@ -10,6 +10,7 @@ import com.kaishengit.crm.mapper.AccountMapper;
 import com.kaishengit.crm.service.AccountService;
 import com.kaishengit.exception.AuthenticationException;
 import com.kaishengit.exception.ServiceException;
+import com.kaishengit.weixin.WeiXinUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,9 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private AccountDeptMapper accountDeptMapper;
+    @Autowired
+    private WeiXinUtil weiXinUtil;
+
     @Value("${password.salt}")
     private String passwordSalt;
 
@@ -48,6 +52,9 @@ public class AccountServiceImpl implements AccountService {
 
             accountDeptMapper.insert(accountDeptKey);
         }
+
+        //同步到微信
+        weiXinUtil.createAccount(account.getId(),account.getUserName(),deptIds,account.getMobile());
     }
 
     @Override
@@ -76,9 +83,15 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.findByDeptId(deptId);
     }
 
+    /**
+     * 删除账号
+     * @param id
+     */
     @Override
     @Transactional
     public void delAccountById(Integer id) {
+        //从微信中删除账号
+        weiXinUtil.deleteAccountById(id.toString());
         //删除关系
         AccountDeptExample accountDeptExample = new AccountDeptExample();
         accountDeptExample.createCriteria().andAccountIdEqualTo(id);

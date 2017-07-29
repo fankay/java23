@@ -9,6 +9,7 @@ import com.kaishengit.crm.entity.CustomerExample;
 import com.kaishengit.crm.mapper.CustomerMapper;
 import com.kaishengit.crm.service.CustomerService;
 import com.kaishengit.exception.ServiceException;
+import com.kaishengit.weixin.WeiXinUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -34,6 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
     private List<String> sourceList;
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private WeiXinUtil weiXinUtil;
 
     /**
      * 获取所有行业数据
@@ -59,10 +63,13 @@ public class CustomerServiceImpl implements CustomerService {
      * @param account 当前登录系统的用户
      */
     @Override
+    @Transactional
     public void saveNewCustomer(Customer customer, Account account) {
         customer.setAccountId(account.getId());
         customer.setCreateTime(new Date());
         customerMapper.insert(customer);
+
+        weiXinUtil.sendTextMessageToUser("新增客户[ "+ customer.getCustName() +" ]","fankay");
     }
 
     /**
