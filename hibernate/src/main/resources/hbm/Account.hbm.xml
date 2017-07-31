@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+    <!--package : pojo类所在包，该选项可选，
+    如果没有配置，则class的name属性需要写完全限定名-->
+
+    <!--
+        name : 类的名称，和父节点的package组成完全限定名
+        table : 表的名称
+    -->
+    <class name="Account" table="account">
+        <!--
+            该节点用于配置注解列
+            name : 类中属性的名称
+            column : 表中主键列的名称，如果列名和属性名（name）相同，
+                     则该选项可以省略
+        -->
+        <id name="id" column="id">
+            <!--用于指定主键生成策略
+                native : 自动增长
+            -->
+            <generator class="native"/>
+        </id>
+
+        <!--
+            配置非主键列和属性的对应关系
+            name : 属性名称
+            column : 列名称，如果和name值相同，可以省略
+        -->
+        <property name="username" column="username"/>
+        <property name="address"/>
+        <property name="age"/>
+
+
+    </class>
+
+
+</hibernate-mapping>

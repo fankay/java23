@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!--连接数据库必要参数-->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql:///hibernate?useSSL=false</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">rootroot</property>
+
+        <!--方言-->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!--数据库连接池-->
+        <property name="c3p0.max_size">10</property>
+        <property name="c3p0.min_size">5</property>
+        <property name="c3p0.timeout">5000</property>
+        <property name="c3p0.max_statements">100</property>
+        <property name="c3p0.idle_test_period">3000</property>
+        <property name="c3p0.acquire_increment">2</property>
+        <property name="c3p0.validate">false</property>
+
+        <!--将生成的SQL显示在控制台上-->
+        <property name="show_sql">true</property>
+        <!--将当前的session绑定到线程上-->
+        <property name="current_session_context_class">thread</property>
+
+        <!--注册hbm映射文件-->
+        <mapping resource="hbm/Account.hbm.xml"/>
+
+    </session-factory>
+</hibernate-configuration>
