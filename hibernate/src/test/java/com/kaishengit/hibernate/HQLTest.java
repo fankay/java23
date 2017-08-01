@@ -33,13 +33,13 @@ public class HQLTest {
         List<Account> accountList = query.list();
 
         for(Account account : accountList) {
-            System.out.println(account.getId() + " -> " + account.getUsername() + " -> " + account.getAddress());
+            System.out.println(account.getId() + " -> " + account.getUserName() + " -> " + account.getAddress());
         }
     }
 
     @Test
     public void findByUserName() {
-        String hql = "from Account as ac where ac.username = :name";
+        String hql = "from Account as ac where ac.userName = :name";
 
         Query query = session.createQuery(hql);
 
@@ -50,14 +50,14 @@ public class HQLTest {
         List<Account> accountList = query.list();
 
         for(Account account : accountList) {
-            System.out.println(account.getId() + " -> " + account.getUsername() + " -> " + account.getAddress());
+            System.out.println(account.getId() + " -> " + account.getUserName() + " -> " + account.getAddress());
         }
     }
 
 
     @Test
     public void findBy() {
-        String hql = "select id,username,address from Account where age = :age";
+        String hql = "select id,userName,address from Account where age = :age";
         Query query = session.createQuery(hql);
         query.setParameter("age",23);
 
@@ -88,7 +88,7 @@ public class HQLTest {
 
     @Test
     public void findByUserNameDesc() {
-        String hql = "from Account as ac where ac.username = :name order by id desc";
+        String hql = "from Account as ac where ac.userName = :name order by id desc";
 
         Query query = session.createQuery(hql);
 
@@ -99,13 +99,13 @@ public class HQLTest {
         List<Account> accountList = query.list();
 
         for(Account account : accountList) {
-            System.out.println(account.getId() + " -> " + account.getUsername() + " -> " + account.getAddress());
+            System.out.println(account.getId() + " -> " + account.getUserName() + " -> " + account.getAddress());
         }
     }
 
     @Test
     public void findByUserNameDescPage() {
-        String hql = "from Account as ac where ac.username = :name order by id desc";
+        String hql = "from Account as ac where ac.userName = :name order by id desc";
 
         Query query = session.createQuery(hql);
 
@@ -120,7 +120,7 @@ public class HQLTest {
         List<Account> accountList = query.list();
 
         for(Account account : accountList) {
-            System.out.println(account.getId() + " -> " + account.getUsername() + " -> " + account.getAddress());
+            System.out.println(account.getId() + " -> " + account.getUserName() + " -> " + account.getAddress());
         }
     }
 

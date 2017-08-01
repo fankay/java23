@@ -29,7 +29,7 @@
             name : 属性名称
             column : 列名称，如果和name值相同，可以省略
         -->
-        <property name="username" column="username"/>
+        <property name="userName" column="user_name"/>
         <property name="address"/>
         <property name="age"/>
 

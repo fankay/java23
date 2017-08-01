@@ -3,7 +3,7 @@ package com.kaishengit.pojo;
 public class Account {
 
     private Integer id;
-    private String username;
+    private String userName;
     private String address;
     private Integer age;
 
@@ -15,12 +15,12 @@ public class Account {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getAddress() {
@@ -37,5 +37,15 @@ public class Account {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", username='" + userName + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

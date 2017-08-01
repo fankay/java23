@@ -31,7 +31,7 @@ public class Test {
         transaction.begin();
 
         Account account = new Account();
-        account.setUsername("王思雨");
+        account.setUserName("王思雨");
         account.setAddress("北京");
         account.setAge(23);
 
@@ -39,7 +39,7 @@ public class Test {
 
         //session.clear(); //将session关联的所有对象从session中清除
 
-        account.setUsername("王老五");
+        account.setUserName("王老五");
         session.flush();
 
 
@@ -61,7 +61,7 @@ public class Test {
         Session session2 = HibernateUtil.getSession();
         session2.beginTransaction();
 
-        account.setUsername("李老八"); //游离态
+        account.setUserName("李老八"); //游离态
         session2.merge(account); // 再次 持久态
 
         session2.getTransaction().commit(); //再次 游离态
@@ -77,7 +77,7 @@ public class Test {
         session.beginTransaction();
 
         Account account = new Account();
-        account.setUsername("王思雨");
+        account.setUserName("王思雨");
         account.setAddress("北京");
         account.setAge(23);
 
@@ -110,7 +110,7 @@ public class Test {
         Account account = (Account) session.load(Account.class,22);
         //System.out.println(account.getUsername());
 
-        System.out.println(account.getUsername());
+        System.out.println(account.getUserName());
 
         session.getTransaction().commit();
 
@@ -128,7 +128,7 @@ public class Test {
         session.getTransaction().begin();
 
         Account account = (Account) session.get(Account.class,1);
-        account.setUsername("张三丰");
+        account.setUserName("张三丰");
 
         session.getTransaction().commit();
     }
@@ -150,14 +150,14 @@ public class Test {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
 
-        String hql = "from Account where username = ?";
+        String hql = "from Account where userName = ?";
         Query query = session.createQuery(hql);
         query.setParameter(0,"tom");
 
         List<Account> accountList = query.list();
 
         for(Account account : accountList) {
-            System.out.println(account.getUsername() + " -> " + account.getAddress());
+            System.out.println(account.getUserName() + " -> " + account.getAddress());
         }
 
         session.getTransaction().commit();
