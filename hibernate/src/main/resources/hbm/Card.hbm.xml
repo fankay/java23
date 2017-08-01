@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.kaishengit.pojo.Card" table="card">
+        <id name="id" column="id">
+            <!--
+                主键生成策略 foreign
+                property参数的值为 当前对象关联主表的对象的属性名称
+            -->
+            <generator class="foreign">
+                <param name="property">person</param>
+            </generator>
+        </id>
+        <property name="cardNum" column="card_num"/>
+        <one-to-one name="person" class="com.kaishengit.pojo.Person"/>
+    </class>
+</hibernate-mapping>

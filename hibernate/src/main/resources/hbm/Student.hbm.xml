@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.kaishengit.pojo.Student" table="student">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="studentName" column="student_name"/>
+        <!--
+            set 节点的order-by 指的是关系表中的列
+        -->
+        <set name="teacherSet" table="teacher_student" order-by="teacher_id desc">
+            <key column="student_id"></key>
+            <many-to-many class="com.kaishengit.pojo.Teacher" column="teacher_id" />
+        </set>
+    </class>
+</hibernate-mapping>

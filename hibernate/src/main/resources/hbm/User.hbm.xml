@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.kaishengit.pojo">
+
+    <class name="User" table="user">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="userName" column="user_name"/>
+        <!--
+            一对多
+            name : set的属性名称
+            order-by : 对set集合查询时排序
+            fetch : join 采用链接查询加载set集合，避免N+1
+            inverse : true 表示放弃关系维护
+            cascade : delete 级联删除
+         -->
+        <set name="addressSet" order-by="id desc" inverse="true" cascade="delete">
+            <!-- 多的一端对应表的外键列名 -->
+            <key column="user_id"/>
+            <!-- set中的类型 -->
+            <one-to-many class="Address"/>
+        </set>
+    </class>
+</hibernate-mapping>
