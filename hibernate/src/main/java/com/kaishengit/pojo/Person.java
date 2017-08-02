@@ -1,8 +1,18 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = "person_name")
     private String personName;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Card card;
 
     public int getId() {

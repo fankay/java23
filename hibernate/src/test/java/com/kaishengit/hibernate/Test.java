@@ -33,7 +33,7 @@ public class Test {
         Account account = new Account();
         account.setUserName("王思雨");
         account.setAddress("北京");
-        account.setAge(23);
+        account.setAge(28);
 
         session.save(account);//merge=saveOrUpdate 不改变对象状态
 

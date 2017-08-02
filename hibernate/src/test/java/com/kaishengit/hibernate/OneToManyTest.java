@@ -80,8 +80,8 @@ public class OneToManyTest {
         User user = (User) session.get(User.class,1);
 
         Address address = new Address();
-        address.setCityName("成都");
-        address.setAddress("西南大道");
+        address.setCityName("拉萨");
+        address.setAddress("布达拉宫");
         address.setUser(user);
 
         session.save(address);

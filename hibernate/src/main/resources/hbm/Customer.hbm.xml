@@ -11,7 +11,14 @@
         <id name="id">
             <generator class="uuid"/>
         </id>
+
+        <!--乐观锁字段-->
+        <!--<version name="version"/>-->
+
         <property name="name"/>
+
+
+
     </class>
 
 </hibernate-mapping>

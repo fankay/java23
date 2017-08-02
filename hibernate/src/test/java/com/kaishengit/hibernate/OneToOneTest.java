@@ -22,7 +22,7 @@ public class OneToOneTest extends BaseTestCase {
 
     @Test
     public void find() {
-        Person person = (Person) session.get(Person.class,2);
+        Person person = (Person) session.get(Person.class,3);
         System.out.println(person.getPersonName());
         System.out.println(person.getCard().getCardNum());
     }

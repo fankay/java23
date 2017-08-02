@@ -1,10 +1,19 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "teacher")
 public class Teacher {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = "teacher_name")
     private String teacherName;
+
+    @ManyToMany(mappedBy = "teacherSet")
     private Set<Student> studentSet;
 
     public int getId() {

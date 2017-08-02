@@ -1,8 +1,19 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "post_content")
 public class PostContent {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id",unique = true)
     private Post post;
 
     public int getId() {

@@ -1,8 +1,23 @@
 package com.kaishengit.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "card")
 public class Card {
+
+    @Id
+    @GenericGenerator(name = "FK",strategy = "foreign",parameters = @org.hibernate.annotations.Parameter(name = "property",value = "person"))
+    @GeneratedValue(generator = "FK")
     private int id;
+
+    @Column(name = "card_num")
     private String cardNum;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Person person;
 
     public int getId() {

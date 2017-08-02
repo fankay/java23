@@ -1,10 +1,20 @@
 package com.kaishengit.pojo;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Address {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(name = "city_name")
     private String cityName;
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Integer getId() {

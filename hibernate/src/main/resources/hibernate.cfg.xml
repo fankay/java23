@@ -15,6 +15,9 @@
         <!--方言-->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
+        <!--修改数据库的隔离级别-->
+        <!--<property name="connection.isolation">8</property>-->
+
         <!--数据库连接池-->
         <property name="c3p0.max_size">10</property>
         <property name="c3p0.min_size">5</property>
@@ -35,7 +38,19 @@
 
 
         <!--注册hbm映射文件-->
-        <mapping resource="hbm/Account.hbm.xml"/>
+        <mapping class="com.kaishengit.pojo.Account"/>
+        <mapping class="com.kaishengit.pojo.Customer"/>
+        <mapping class="com.kaishengit.pojo.User"/>
+        <mapping class="com.kaishengit.pojo.Address"/>
+        <mapping class="com.kaishengit.pojo.Student"/>
+        <mapping class="com.kaishengit.pojo.Teacher"/>
+        <mapping class="com.kaishengit.pojo.Post"/>
+        <mapping class="com.kaishengit.pojo.PostContent"/>
+        <mapping class="com.kaishengit.pojo.Card"/>
+        <mapping class="com.kaishengit.pojo.Person"/>
+
+
+        <!--<mapping resource="hbm/Account.hbm.xml"/>
         <mapping resource="hbm/User.hbm.xml"/>
         <mapping resource="hbm/Address.hbm.xml"/>
         <mapping resource="hbm/Student.hbm.xml"/>
@@ -44,7 +59,7 @@
         <mapping resource="hbm/Person.hbm.xml"/>
         <mapping resource="hbm/Post.hbm.xml"/>
         <mapping resource="hbm/PostContent.hbm.xml"/>
-        <mapping resource="hbm/Customer.hbm.xml"/>
+        <mapping resource="hbm/Customer.hbm.xml"/>-->
 
     </session-factory>
 </hibernate-configuration>
