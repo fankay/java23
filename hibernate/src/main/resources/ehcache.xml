@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ehcache>
+
+    <!--
+    内存不足时，存放到磁盘上的路径
+    java.io.tmpdir 表示当前操作系统登录用户的临时文件夹
+    -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+    />
+
+    <!--<cache name="com.kaishengit.pojo.Customer" ></cache>-->
+
+</ehcache>

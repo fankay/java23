@@ -4,6 +4,7 @@ import com.kaishengit.pojo.Address;
 import com.kaishengit.pojo.User;
 import com.kaishengit.util.HibernateUtil;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.junit.After;
@@ -91,8 +92,12 @@ public class OneToManyTest {
         //!!!!!
         Address address = (Address) session.get(Address.class,2);
         System.out.println(address.getCityName() + " ->" + address.getAddress());
+
+        //预先加载延迟的对象
+        Hibernate.initialize(address.getUser());
+
         //延迟加载，如果需要一，则再次发出请求进行查询
-        System.out.println(address.getUser().getUserName());
+        //System.out.println(address.getUser().getUserName());
     }
 
     @Test
