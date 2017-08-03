@@ -61,6 +61,9 @@ public class Customer implements Serializable {
      * 客户所属账号，如果未空则是公海客户
      */
     //private Integer accountId;
+    @ManyToOne //(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     /**
      * 最后跟进时间
@@ -210,5 +213,13 @@ public class Customer implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

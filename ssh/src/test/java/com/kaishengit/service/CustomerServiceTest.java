@@ -1,6 +1,8 @@
 package com.kaishengit.service;
 
 import com.kaishengit.pojo.Customer;
+import com.kaishengit.util.orm.Condition;
+import com.kaishengit.util.orm.Page;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +51,7 @@ public class CustomerServiceTest {
     public void findAll() {
         List<Customer> customerList = customerService.findAll();
         for(Customer customer : customerList) {
-            System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress());
+            System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress() + " -> " + customer.getAccount().getUserName());
         }
     }
 
@@ -64,6 +66,50 @@ public class CustomerServiceTest {
         for(Customer customer : customerList) {
             System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress());
         }
+    }
+
+    @Test
+    public void findByCondition() {
+        //Condition condition = new Condition("level","★★★","eq");
+        Condition condition = new Condition("jobTitle","O","like");
+        Condition conditionAddress = new Condition("address","美国洛杉矶","eq");
+
+        List<Customer> customerList = customerService.findByCondition(condition,conditionAddress);
+        for(Customer customer : customerList) {
+            System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress());
+        }
+    }
+
+    @Test
+    public void page() {
+        Page<Customer> page = customerService.findByPageNum(2);
+
+        System.out.println(page.getTotal());
+        System.out.println(page.getTotalPageSize());
+
+        List<Customer> customerList = page.getItems();
+        for(Customer customer : customerList) {
+            System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress());
+        }
+    }
+
+    @Test
+    public void page2() {
+        Condition condition = new Condition("trade","互联网","eq");
+        Condition condition1 = new Condition("source","自动上门","eq");
+
+        Page<Customer> page = customerService.findByPageNum(1,condition,condition1);
+
+        System.out.println("----------------------------------------------------------");
+        System.out.println(page.getTotal());
+        System.out.println(page.getTotalPageSize());
+
+        List<Customer> customerList = page.getItems();
+        for(Customer customer : customerList) {
+            System.out.println(customer.getId() + " : " + customer.getCustName() + " -> " + customer.getAddress());
+        }
+        System.out.println("----------------------------------------------------------");
+
     }
 
 }
