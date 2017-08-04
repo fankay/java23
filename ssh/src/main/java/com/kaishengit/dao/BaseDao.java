@@ -1,11 +1,15 @@
 package com.kaishengit.dao;
 
+import com.kaishengit.pojo.Customer;
 import com.kaishengit.util.orm.Condition;
 import com.kaishengit.util.orm.Page;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.RootEntityResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -96,13 +100,25 @@ public abstract class BaseDao<T,PK extends Serializable> {
         return page;
     }
 
-    public Long count(Condition... conditions) {
-        Criteria criteria = getSession().createCriteria(clazz);
+    public Long count(Criteria criteria,Condition... conditions) {
         for(Condition condition : conditions) {
             criteria.add(builderCriterionWithCondition(condition));
         }
-        criteria.setProjection(Projections.rowCount());
-        return (Long) criteria.uniqueResult();
+
+        ResultTransformer resultTransformer = criteria.ROOT_ENTITY;//获取之前查询的列
+
+        criteria.setProjection(Projections.rowCount()); //select id,
+        Long count =  (Long) criteria.uniqueResult();
+
+        criteria.setProjection(null);
+        criteria.setResultTransformer(resultTransformer);
+
+        return count;
+    }
+
+    public Long count(Condition... conditions) {
+        Criteria criteria = getSession().createCriteria(clazz);
+        return count(criteria,conditions);
     }
 
     public Page<T> findByPageNum(Integer pageNum,Integer pageSize,Condition... conditions) {
@@ -127,14 +143,11 @@ public abstract class BaseDao<T,PK extends Serializable> {
         return page;
     }
 
-
-    public Page<T> findByPageNum(Integer pageNum,Integer pageSize,String orderPropertyName,String orderType,Condition... conditions) {
+    public Page<T> findByPageNum(Criteria criteria, Integer pageNum, Integer pageSize, String orderPropertyName, String orderType, Condition[] conditions) {
         //总条数
-        int totalSize = count(conditions).intValue();
+        int totalSize = count(criteria,conditions).intValue();
         //总页数 = 总条数 / pageSize(+1)
         Page<T> page = new Page<T>(totalSize,pageSize,pageNum);
-
-        Criteria criteria = getSession().createCriteria(clazz);
 
         for(Condition condition : conditions) {
             criteria.add(builderCriterionWithCondition(condition));
@@ -154,6 +167,11 @@ public abstract class BaseDao<T,PK extends Serializable> {
         return page;
     }
 
+    public Page<T> findByPageNum(Integer pageNum,Integer pageSize,String orderPropertyName,String orderType,Condition... conditions) {
+        Criteria criteria = getSession().createCriteria(clazz);
+        return findByPageNum(criteria,pageNum,pageSize,orderPropertyName,orderType,conditions);
+    }
+
 
 
 
@@ -164,18 +182,37 @@ public abstract class BaseDao<T,PK extends Serializable> {
      * @return
      */
     private Criterion builderCriterionWithCondition(Condition condition) {
-        if(condition.getType().equalsIgnoreCase("eq")) {
-            return Restrictions.eq(condition.getPropertyName(),condition.getValue());
-        } else if(condition.getType().equalsIgnoreCase("lt")) {
-            return Restrictions.lt(condition.getPropertyName(),condition.getValue());
-        } else if(condition.getType().equalsIgnoreCase("gt")) {
-            return Restrictions.gt(condition.getPropertyName(),condition.getValue());
-        } else if(condition.getType().equalsIgnoreCase("le")) {
-            return Restrictions.le(condition.getPropertyName(),condition.getValue());
-        } else if(condition.getType().equalsIgnoreCase("ge")) {
-            return Restrictions.ge(condition.getPropertyName(),condition.getValue());
-        } else if(condition.getType().equalsIgnoreCase("like")) {
-            return Restrictions.like(condition.getPropertyName(),condition.getValue().toString(), MatchMode.ANYWHERE);
+        String propertyName = condition.getPropertyName();
+        Object value = condition.getValue();
+        String type = condition.getType();
+
+        if (propertyName.contains("_or_")) {
+            String[] propertyNames = propertyName.split("_or_");
+
+            Disjunction disjunction = Restrictions.disjunction();
+            for (String name : propertyNames) {
+                disjunction.add(builderCriterion(name,type,value));
+            }
+
+            return disjunction;
+        } else {
+            return builderCriterion(propertyName, type, value);
+        }
+    }
+
+    private Criterion builderCriterion(String propertyName,String type,Object value) {
+        if(type.equalsIgnoreCase("eq")) {
+            return Restrictions.eq(propertyName,value);
+        } else if(type.equalsIgnoreCase("lt")) {
+            return Restrictions.lt(propertyName,value);
+        } else if(type.equalsIgnoreCase("gt")) {
+            return Restrictions.gt(propertyName,value);
+        } else if(type.equalsIgnoreCase("le")) {
+            return Restrictions.le(propertyName,value);
+        } else if(type.equalsIgnoreCase("ge")) {
+            return Restrictions.ge(propertyName,value);
+        } else if(type.equalsIgnoreCase("like")) {
+            return Restrictions.like(propertyName,value.toString(), MatchMode.ANYWHERE);
         }
         return null;
     }

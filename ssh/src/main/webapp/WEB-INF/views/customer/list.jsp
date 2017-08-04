@@ -19,8 +19,10 @@
             </div>
             <div class="panel-body">
                 <form method="get" class="form-inline">
-                    <input type="text" placeholder="客户名称" class="form-control" name="q_like_custName" value="${q_like_custName}">
-
+                    <input type="text" placeholder="客户名称 或 联系方式" class="form-control" name="q_like_s_custName_or_mobile" value="${q_like_s_custName_or_mobile}">
+                    <input type="text" placeholder="客户ID" class="form-control" name="q_eq_i_id" value="${q_eq_i_id}">
+                    <input type="text" placeholder="账号ID" class="form-control" name="q_eq_i_account.id" value="${requestScope['q_eq_i_account.id']}">
+                    <input type="text" placeholder="账号名称" class="form-control" name="q_eq_s_a.userName" value="${requestScope['q_eq_s_a.userName']}">
                     <button class="btn btn-default">搜索</button>
                 </form>
             </div>
@@ -31,6 +33,7 @@
             <thead>
             <tr>
                 <th>客户名称</th>
+                <th>地址</th>
                 <th>级别</th>
                 <th>联系电话</th>
                 <th>来源</th>
@@ -41,6 +44,7 @@
                 <c:forEach items="${page.items}" var="cust">
                     <tr>
                         <td>${cust.custName}</td>
+                        <td>${cust.address}</td>
                         <td>${cust.level}</td>
                         <td>${cust.mobile}</td>
                         <td>${cust.source}</td>

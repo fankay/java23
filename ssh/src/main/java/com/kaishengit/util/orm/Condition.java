@@ -76,19 +76,22 @@ public class Condition {
             //只处理以q_开头并且值存在的键值对
             if(key.startsWith("q_") && StringUtils.isNotEmpty(value)) {
                 //约定的方式
-                // q_eq_userName=abc
-                // q_like_custName=xyz
+                // q_eq_s_userName_or_mobile = 123  (userName = 123 or mobile = 123)
+                // q_like_s_custName
                 try {
                     value = new String(value.getBytes("ISO8859-1"),"UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
 
-                String[] array = key.split("_");
+                String[] array = key.split("_",4);
+
+                String valueType = array[2];
+                Object conditionValue = convertValueType(value,valueType);
 
                 Condition condition = new Condition();
-                condition.setPropertyName(array[2]);
-                condition.setValue(value);
+                condition.setPropertyName(array[3]); // userName_or_mobile
+                condition.setValue(conditionValue);
                 condition.setType(array[1]);
 
                 conditionList.add(condition);
@@ -98,5 +101,28 @@ public class Condition {
         }
 
         return conditionList.toArray(new Condition[]{});
+    }
+
+    /**
+     * 将value根据valueType进行类型转换
+     * @param value
+     * @param valueType
+     * @return
+     */
+    private static Object convertValueType(String value, String valueType) {
+        if("s".equalsIgnoreCase(valueType)) {
+            return value;
+        } else if("i".equalsIgnoreCase(valueType)) {
+            return Integer.valueOf(value);
+        } else if("d".equalsIgnoreCase(valueType)) {
+            return Double.valueOf(value);
+        } else if("f".equalsIgnoreCase(valueType)) {
+            return Float.valueOf(value);
+        } else if("b".equalsIgnoreCase(valueType)) {
+            return Boolean.valueOf(value);
+        } else if("l".equalsIgnoreCase(valueType))  {
+            return Long.valueOf(value);
+        }
+        return null;
     }
 }
