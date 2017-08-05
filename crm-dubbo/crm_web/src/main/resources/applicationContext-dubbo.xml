@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--应用名称-->
+    <dubbo:application name="CRM"/>
+    <!--注册中心地址-->
+    <dubbo:registry address="zookeeper://192.168.1.112:2181"/>
+    <!--从Dubbo中获取服务的实现类，并放入Spring容器-->
+    <dubbo:reference interface="com.kaishengit.crm.service.AccountService" id="accountService"/>
+    <dubbo:reference interface="com.kaishengit.crm.service.DeptService" id="deptService"/>
+
+</beans>
