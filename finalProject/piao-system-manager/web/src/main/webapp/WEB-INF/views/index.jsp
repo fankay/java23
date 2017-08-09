@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
 
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
@@ -45,7 +47,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <a href="#">忘记密码</a><br>
+                            <input type="checkbox" name="rememberMe"> Remember Me
                         </label>
                     </div>
                 </div>
@@ -67,9 +69,15 @@
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/plugins/validate/jquery.validate.js"></script>
 <script src="/static/plugins/layer/layer.js"></script>
+<!-- iCheck -->
+<script src="/static/plugins/iCheck/icheck.min.js"></script>
 <script>
     $(function () {
-
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
         $("#loginBtn").click(function () {
             $("#loginForm").submit();
         });

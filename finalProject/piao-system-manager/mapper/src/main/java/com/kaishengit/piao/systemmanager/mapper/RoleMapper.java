@@ -19,4 +19,6 @@ public interface RoleMapper {
     int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
 
     int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
+
+    List<Role> findByUserId(String userId);
 }

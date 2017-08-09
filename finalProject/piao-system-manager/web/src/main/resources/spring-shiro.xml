@@ -8,10 +8,23 @@
         <property name="userService" ref="userService"/>
     </bean>
 
+    <!--rememberMeCookie-->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="maxAge" value="604800"/>
+        <property name="httpOnly" value="true"/>
+        <property name="name" value="rememberMe"/>
+    </bean>
+
+    <!--rememberMeManager-->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
     <!--securityManager-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myRealm"/>
         <property name="cacheManager" ref="cacheManager"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
     <!--cacheManager-->
@@ -50,7 +63,8 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
-                /* = authc
+                /info/** = roles[基本信息]
+                /** = user
             </value>
         </property>
     </bean>

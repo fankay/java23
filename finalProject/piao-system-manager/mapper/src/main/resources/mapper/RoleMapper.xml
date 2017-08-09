@@ -124,7 +124,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="findByUserId" resultType="com.kaishengit.piao.systemmanager.modal.Role">
+        SELECT
+            role.*
+        FROM
+            role
+        INNER JOIN user_role ON user_role.role_id = role.id
+        WHERE
+            user_role.user_id = #{userId}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update role
     <set>
       <if test="record.id != null">

@@ -4,11 +4,13 @@ import com.kaishengit.piao.systemmanager.api.UserService;
 import com.kaishengit.piao.systemmanager.mapper.RoleMapper;
 import com.kaishengit.piao.systemmanager.mapper.UserMapper;
 import com.kaishengit.piao.systemmanager.mapper.UserRoleMapper;
+import com.kaishengit.piao.systemmanager.modal.Role;
 import com.kaishengit.piao.systemmanager.modal.User;
 import com.kaishengit.piao.systemmanager.modal.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +43,15 @@ public class UserServiceImpl implements UserService {
             return userList.get(0);
         }
         return null;
+    }
+
+    @Override
+    public List<String> findRoleNamesByUserId(String id) {
+        List<Role> roleList = roleMapper.findByUserId(id);
+        List<String> roleNames = new ArrayList<>();
+        for(Role role : roleList) {
+            roleNames.add(role.getRoleName());
+        }
+        return roleNames;
     }
 }

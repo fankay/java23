@@ -18,15 +18,7 @@
         <!-- Main content -->
         <section class="content">
 
-           <!-- DIY -->
-            Hello, <shiro:principal property="name"/>
-            <hr>
-            <shiro:hasRole name="综合办公">
-                <h3>综合办公</h3>
-            </shiro:hasRole>
-            <shiro:hasRole name="管理员">
-                Hello,Admin
-            </shiro:hasRole>
+           <h3>INfo</h3>
 
         </section>
         <!-- /.content -->

@@ -27,7 +27,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">${sessionScope.curr_user.userName}</span>
+                        <span class="hidden-xs">${sessionScope.curr_user.name}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -36,9 +36,7 @@
 
                             <p>
                                 <small>
-                                    <c:forEach items="${sessionScope.curr_user.deptList}" var="dept">
-                                        ${dept.deptName} &nbsp;&nbsp;
-                                    </c:forEach>
+
                                 </small>
                             </p>
                         </li>
@@ -82,7 +80,7 @@
             <%--首页--%>
             <li class="${param.active == 'home' ? 'active' : ''}"><a href="/home"><i class="fa fa-home"></i>
                 <span>首页</span></a></li>
-            <!-- 客户管理 -->
+            <shiro:hasRole name="基本信息">
             <li class="treeview ${fn:startsWith(param.active, "customer_") ? 'active' : ''}">
                 <a href="#">
                     <i class="fa fa-address-book-o"></i> <span>基本信息管理</span>
@@ -96,7 +94,8 @@
                     <li><a href="/customer/public"><i class="fa fa-circle-o"></i> 公海客户</a></li>
                 </ul>
             </li>
-            <!-- 工作记录 -->
+            </shiro:hasRole>
+            <shiro:hasRole name="综合办公">
             <li class="treeview ${fn:startsWith(param.active, "sales_") ? 'active' : ''}">
                 <a href="#">
                     <i class="fa fa-money"></i> <span>综合办公</span>
@@ -109,12 +108,14 @@
                     <li class="${param.active == 'sales_public' ? 'active' : ''}"><a href="/sales/public"><i class="fa fa-circle-o"></i> 公共记录</a></li>
                 </ul>
             </li>
-            <!-- 待办事项 -->
+            </shiro:hasRole>
+            <shiro:hasRole name="系统管理">
             <li class="${param.active == 'task' ? 'active' : ''}">
                 <a href="/task">
                     <i class="fa fa-calendar"></i> <span>系统管理</span>
                 </a>
             </li>
+            </shiro:hasRole>
 
         </ul>
     </section>
