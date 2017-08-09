@@ -7,12 +7,21 @@ import java.util.Date;
  * @author 
  */
 public class User implements Serializable {
+
+    public static final String STATE_ENABLE = "正常";
+    public static final String STATE_DISABLE = "禁用";
+
     private String id;
 
     /**
      * 用户姓名
      */
     private String name;
+
+    /**
+     * 状态 正常|禁用
+     */
+    private String state;
 
     /**
      * 密码
@@ -50,6 +59,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getPassword() {

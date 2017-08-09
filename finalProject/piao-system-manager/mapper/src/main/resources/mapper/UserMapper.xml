@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kaishengit.piao.systemmanager.modal.UserMapper">
+<mapper namespace="com.kaishengit.piao.systemmanager.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.kaishengit.piao.systemmanager.modal.User">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, mobile, create_time, update_time
+    id, name, state, password, mobile, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.kaishengit.piao.systemmanager.modal.UserExample" resultMap="BaseResultMap">
     select
@@ -100,10 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.kaishengit.piao.systemmanager.modal.User">
-    insert into user (id, name, mobile, 
-      create_time, update_time)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into user (id, name, state, 
+      password, mobile, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.kaishengit.piao.systemmanager.modal.User">
     insert into user
@@ -113,6 +117,12 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="password != null">
+        password,
       </if>
       <if test="mobile != null">
         mobile,
@@ -130,6 +140,12 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null">
         #{mobile,jdbcType=VARCHAR},
@@ -157,6 +173,12 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
       <if test="record.mobile != null">
         mobile = #{record.mobile,jdbcType=VARCHAR},
       </if>
@@ -175,6 +197,8 @@
     update user
     set id = #{record.id,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -187,6 +211,12 @@
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null">
         mobile = #{mobile,jdbcType=VARCHAR},
@@ -203,6 +233,8 @@
   <update id="updateByPrimaryKey" parameterType="com.kaishengit.piao.systemmanager.modal.User">
     update user
     set name = #{name,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

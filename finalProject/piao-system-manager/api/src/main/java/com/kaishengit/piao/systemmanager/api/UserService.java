@@ -4,6 +4,7 @@ import com.kaishengit.piao.systemmanager.modal.User;
 
 public interface UserService {
 
-    User login(String userName,String password);
+    User findByUserName(String username);
 
+    User findByMobile(String username);
 }

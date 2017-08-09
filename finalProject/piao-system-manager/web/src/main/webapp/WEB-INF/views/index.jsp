@@ -56,9 +56,6 @@
                 <!-- /.col -->
             </div>
         </form>
-
-
-
     </div>
     <!-- /.login-box-body -->
 </div>
@@ -95,20 +92,8 @@
                 password:{
                     required:"请输入密码"
                 }
-            },
-            submitHandler:function(){
-                $.post("/",$("#loginForm").serialize()).done(function(data){
-                    if(data.state == "success") {
-                       window.location.href = "/home";
-                    } else {
-                        layer.msg(data.message);
-                    }
-                }).error(function(){
-                    layer.msg("服务器异常");
-                });
             }
         });
-
     })
 </script>
 </body>
