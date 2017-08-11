@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--Jedis 连接池配置-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="10"/>
+        <property name="maxWaitMillis" value="5000"/>
+    </bean>
+
+    <bean id="node1" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6000"/>
+    </bean>
+    <bean id="node2" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6001"/>
+    </bean>
+    <bean id="node3" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6002"/>
+    </bean>
+    <bean id="node4" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6003"/>
+    </bean>
+    <bean id="node5" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6004"/>
+    </bean>
+    <bean id="node6" class="redis.clients.jedis.HostAndPort">
+        <constructor-arg name="host" value="192.168.1.110"/>
+        <constructor-arg name="port" value="6005"/>
+    </bean>
+
+   <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+       <constructor-arg name="nodes">
+           <set>
+               <ref bean="node1"/>
+               <ref bean="node2"/>
+               <ref bean="node3"/>
+               <ref bean="node4"/>
+               <ref bean="node5"/>
+               <ref bean="node6"/>
+           </set>
+       </constructor-arg>
+   </bean>
+
+</beans>
