@@ -8,6 +8,9 @@
 
     <dubbo:registry protocol="zookeeper" address="192.168.135.136:2181,192.168.135.136:2182,192.168.135.136:2183"/>
 
+    <!--固定端口和ip-->
+    <dubbo:protocol name="dubbo" port="20880" host="192.168.1.112"/>
+
     <!--用户服务-->
     <dubbo:service interface="com.kaishengit.piao.systemmanager.api.UserService" ref="userServiceImpl"/>
 
