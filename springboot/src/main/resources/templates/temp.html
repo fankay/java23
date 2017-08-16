@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:fragment="header(title)">
+        <h3>CRM管理系统- <span th:text="${title}">首页</span></h3>
+    </div>
+
+    <div th:fragment="footer">
+        <h3>@kaishengit</h3>
+    </div>
+
+
+</body>
+</html>

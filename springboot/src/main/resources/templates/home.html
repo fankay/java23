@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:replace="~{temp::header('客户管理')}"></div>
+
+    <h1 th:if="${name == 'Jack'}">Hello,<span th:text="${name}">SpringBoot</span></h1>
+    <input type="text" th:value="${name}">
+    <h3 th:attr="data-name=${name},data-id=100">name</h3>
+    <a th:href="@{/user(name=${name},twoname=${name})}">name</a>
+    <a th:href="@{/user/{userName}/{twoname}(userName=${name},twoname=${name})}"></a>
+    <ul>
+        <li th:each="str,iter : ${nameList}" th:text="${iter.index + '->' + str}" th:class="${iter.odd ? 'odd' : 'even'}"></li>
+    </ul>
+
+    <div th:replace="~{temp::footer}"></div>
+
+    <script th:inline="javascript">
+        [# th:if="${name != null}"]
+        var name = [[${name}]];
+        [/]
+    </script>
+</body>
+</html>

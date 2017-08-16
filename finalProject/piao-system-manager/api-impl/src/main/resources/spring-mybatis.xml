@@ -7,7 +7,7 @@
 
 
     <!--读取properties配置文件-->
-    <context:property-placeholder location="classpath*:*.properties"/>
+    <context:property-placeholder location="classpath*:config.properties"/>
 
     <!--数据库连接池-->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -23,7 +23,7 @@
         <!-- 数据源 -->
         <property name="dataSource" ref="dataSource"/>
         <!-- 加载Mapper配置文件 -->
-        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath:mapper/UserMapper.xml"></property>
         <!-- 别名类所在包 -->
         <property name="typeAliasesPackage" value="com.kaishengit.piao.systemmanager.modal"/>
         <!-- 其他配置项 -->
