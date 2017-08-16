@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.kaishengit</groupId>
-	<artifactId>webapp</artifactId>
+	<artifactId>springboot-dubbo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>webapp</name>
+	<name>springboot-dubbo</name>
 	<description></description>
 
 	<parent>
@@ -27,56 +27,31 @@
 	</properties>
 
 	<dependencies>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>-->
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>-->
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <!--dubbo-->
-        <dependency>
-            <groupId>io.dubbo.springboot</groupId>
-            <artifactId>spring-boot-starter-dubbo</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>2.6.2</version>
-        </dependency>
-
-       <!-- <dependency>
-            <groupId>nz.net.ultraq.thymeleaf</groupId>
-            <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>2.2.0</version>
-        </dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--dubbo-->
+		<dependency>
+			<groupId>io.dubbo.springboot</groupId>
+			<artifactId>spring-boot-starter-dubbo</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-        <finalName>userServiceProvider</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

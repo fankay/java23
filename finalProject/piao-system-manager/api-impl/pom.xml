@@ -155,7 +155,7 @@
                             <addClasspath>true</addClasspath>
                             <!-- Class-Path添加前缀 -->
                             <classpathPrefix>lib/</classpathPrefix>
-                            <!-- 指定Main-Class -->
+                            <!-- 指定Main-Class！！ -->
                             <mainClass>com.alibaba.dubbo.container.Main</mainClass>
                         </manifest>
                         <manifestEntries>
